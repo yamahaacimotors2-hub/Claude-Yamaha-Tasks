@@ -14,7 +14,7 @@
 | ২ | Hero build shot-এ শুধু **সামনের চাকা, fork আর beam** দেখা যাবে | ACI-র কাছে 3D file নেই। পুরো bike নিখুঁত বানানো যাবে না, কিন্তু cyan rim, gold fork, disc আর tyre Blender-এ ঠিকঠাক বানানো যায়। আর line টাই তো "Map লোড হয় **চাকার নিচে**" |
 | ৩ | End card-এ **official PNG টাই** বসবে | Generate করলে decal বা ABS ring বদলে যেতে পারে। আসল ছবি বসালে product ১০০% ঠিক |
 | ৪ | ১৫ shot থেকে ১২ shot | Hero build পেত মাত্র ২.২৫ সেকেন্ড। এখন পায় ৩ সেকেন্ড |
-| ৫ | Game title-এর সিদ্ধান্ত **শুরুতেই**, শেষে না | পুরোনো SOP-তে clearance ছিল step ৯৫-এ। ততদিনে সব বানানো শেষ, তখন "না" এলে opening টাই ভেঙে যায় |
+| ৫ | Game title-এর clearance **শুরুতেই চাওয়া**, শেষে না | পুরোনো SOP-তে clearance ছিল step ৯৫-এ। ততদিনে সব বানানো শেষ, তখন "না" এলে opening টাই ভেঙে যায় |
 | ৬ | টাকা খরচের আগে **একটা product test** | AI video MT-15 ঠিক রাখতে পারে কি না, এটা এক take-এই জানা যায়। না পারলে বাকি plan বদলাতে হবে |
 
 ---
@@ -24,14 +24,14 @@
 ### বড় gap (এগুলো ঠিক না করলে film আটকাবে)
 
 1. **Step ২৬, ৬৩–৬৫: bike plate + CG comp।** উপরের ১ নম্বর বদল দেখো। এটাই পুরো SOP-র সবচেয়ে বড় ঝুঁকি ছিল।
-2. **Step ০১, ০৩, ৯৫: "GTA VI" লেখা।** অন্য কোম্পানির game-এর নাম Yamaha-র বিজ্ঞাপনে ব্যবহার করা একটা legal প্রশ্ন, আর সিদ্ধান্তটা ACI/Yamaha-র। আগের handoff-এ lock ছিল "game title, name, logo বাদ"; নতুন SOP তার উল্টো বলছে। আমি আইনজীবী নই, তাই শুধু ঝুঁকিটা জানাচ্ছি। **সমাধান:** TV-র লেখা আলাদা layer, আর শুরু থেকেই দুই version: নাম সহ, আর নাম ছাড়া (শুধু "Downloading… 3%" আর open-world game-এর মতো preview)।
-3. **পানি কোন পাশে?** নতুন SOP বলছে বাঁয়ে পানি, ডানে চায়ের দোকান। আগের board-এ (frame ১২, ১৪) উল্টো ছিল, আর আমার Blender proof-ও সেই উল্টোটা ধরে বানানো। একটাই map lock করতে হবে; proof ঘোরানো এক লাইনের বদল।
+2. **Step ০১, ০৩, ৯৫: "GTA VI" লেখা।** অন্য কোম্পানির game-এর নাম Yamaha-র বিজ্ঞাপনে ব্যবহার করা একটা legal প্রশ্ন, আর সিদ্ধান্তটা ACI/Yamaha-র। আগের handoff-এ lock ছিল "game title, name, logo বাদ"; নতুন SOP তার উল্টো বলছে। আমি আইনজীবী নই, তাই শুধু ঝুঁকিটা জানাচ্ছি। **সিদ্ধান্ত:** নাম সহ version-ই main। TV-র লেখা আলাদা layer থাকবে, আর ACI-র লিখিত clearance publish-এর আগে লাগবে।
+3. **পানি কোন পাশে?** নতুন SOP বলছে বাঁয়ে পানি, ডানে চায়ের দোকান। আগের board-এ (frame ১২, ১৪) উল্টো ছিল, আর আমার Blender proof-ও সেই উল্টোটা ধরে বানানো। Lock হয়েছে: পানি বাঁয়ে। Proof v3 এই map-এ বানানো।
 4. **Product reference মাত্র একটা angle।** Official PNG শুধু সামনে-ডান ৩/৪ দেখায়। পেছন আর পাশ কোথাও নেই। তাই chase shot (১৩) আর high side shot (০৮)-এ AI আন্দাজে বানাবে। ACI-র কাছে 3D নেই, কিন্তু অন্য angle-এর official ছবি থাকার কথা। সেগুলো চেয়ে নাও।
 5. **কোন রঙের কারণ কী?** SOP-তে লেখা "raindrop রঙে ফাটে", কারণ লেখা নেই। তুমি আগেই ঠিক করেছ: headlight-এর আলো drop-এ ঢুকে রঙ তৈরি করে। এটা SOP-তে ছিল না, এখন আছে।
 
 ### মাঝারি gap
 
-6. **সময় খুব টাইট।** ০৫, ০৬, ০৯ প্রতিটা প্রায় আধা সেকেন্ড। Puddle-এর ভেতরে স্বপ্নের waterfront ১৩ frame-এ phone-এ পড়া যাবে না। আমার পরামর্শ: puddle শুধু ripple দেখাক আর beam-এর হাতে তুলে দিক। (এটা তোমার সিদ্ধান্ত, নিচে "খোলা সিদ্ধান্ত" দেখো।)
+6. **সময় খুব টাইট।** ০৫, ০৬, ০৯ প্রতিটা প্রায় আধা সেকেন্ড। Puddle-এর ভেতরে স্বপ্নের waterfront ১৩ frame-এ phone-এ পড়া যাবে না। আমার পরামর্শ: puddle শুধু ripple দেখাক আর beam-এর হাতে তুলে দিক। (সিদ্ধান্ত হয়ে গেছে: শুধু ripple।)
 7. **প্রথম frame-এ চারটা জিনিস পড়তে হবে:** মুখ, TV title, ৩%, আর TV-র ভেতরে preview। ২৮ frame-এ এটা বেশি। সমাধান: TV দিয়ে শুরু, তারপর মুখ।
 8. **Step ৪৯, ৬১: EXR, Cryptomatte, colour pipeline।** ১ নম্বর বদলের পর এগুলো শুধু hero build shot-এ লাগবে, বাকিতে লাগবে না।
 9. **বাংলা লেখা।** After Effects আর Premiere-এ বাংলা যুক্তাক্ষর ভেঙে যেতে পারে। Tagline Photoshop-এ লিখে PNG হিসেবে export করো, তারপর বসাও। আগে একবার test করে দেখো।
@@ -141,13 +141,13 @@ Script লেখা, low-res Blender proof (৫৪০×৯৬০, প্রত�
 ### Phase ১ — সিদ্ধান্ত আর setup (আধা দিন)
 
 **০১. তুমি:** ACI-কে তিনটা জিনিস জিজ্ঞেস করো: (ক) TV-তে game-এর নাম থাকতে পারবে কি না, (খ) MT-15-এর সব angle-এর official ছবি, (গ) Yamaha logo file আর brand font।
-**০২. তুমি:** নিচের "খোলা সিদ্ধান্ত" তিনটা ঠিক করো।
+**০২. তুমি:** তিনটা সিদ্ধান্ত ঠিক করো। (হয়ে গেছে, section ৭ দেখো।)
 **০৩. তুমি:** উপরের install list শেষ করো।
 **০৪. CC:** Folder tree আর tracker বানাও (পুরোনো SOP step ০৪–০৬ যেমন ছিল)।
 **০৫. তুমি + CC:** Tool test। Blender-এ MCP দিয়ে একটা cube render; AE আর Premiere-এ ১ সেকেন্ডের export; Photoshop-এ বাংলা tagline লিখে PNG।
-**০৬. CC:** উপর থেকে দেখা map আঁকো: একটা বাঁক, পানি কোন পাশে, চায়ের দোকান, rail, তিনটা landmark, চলার দিক। এই map আর বদলাবে না।
+**০৬. CC:** উপর থেকে দেখা map আঁকো: ডানে বাঁক, পানি বাঁয়ে, চায়ের দোকান ডানে, rail পানির পাশে, তিনটা landmark, চলার দিক। এই map আর বদলাবে না।
 
-> **Gate ১.** Title-এর সিদ্ধান্ত (বা দুই version-এর সিদ্ধান্ত), map, cut আর tool test হাতে আছে।
+> **Gate ১.** Title-এর সিদ্ধান্ত, ACI-কে পাঠানো clearance request, map, cut আর tool test হাতে আছে।
 
 ### Phase ২ — Animatic (আধা দিন)
 
@@ -189,7 +189,7 @@ Script লেখা, low-res Blender proof (৫৪০×৯৬০, প্রত�
 
 ### Phase ৬ — Comp, edit, sound, grade (২ দিন)
 
-**২৭. তুমি (AE):** TV-তে ৩%, ৪% আর title corner pin দিয়ে। দুই version আলাদা layer।
+**২৭. তুমি (AE):** TV-তে ৩%, ৪% আর title corner pin দিয়ে। Title আলাদা layer-এ রাখো।
 **২৮. তুমি (Photoshop + AE):** S12 end card: official PNG, shadow, reflection, tagline PNG, logo।
 **২৯. তুমি (Premiere):** ১২ shot বসাও, animatic নিচে reference। ৩৮৪ frame মেলাও।
 **৩০. তুমি:** Sound: fan/controller, buckle, rain, drop, পাথর আর metal-এর click, swell, hard cut-এ room tone, end sting। Engine আর music rights-clear উৎস থেকে।
@@ -224,11 +224,13 @@ Script লেখা, low-res Blender proof (৫৪০×৯৬০, প্রত�
 
 ---
 
-## ৭. খোলা সিদ্ধান্ত (তোমার)
+## ৭. Lock হওয়া সিদ্ধান্ত
 
-1. **Game-এর নাম:** ACI-র উত্তর না আসা পর্যন্ত নাম ছাড়া version-কেই main ধরব? (আমার পরামর্শ: হ্যাঁ।)
-2. **Puddle-এ স্বপ্নের শহর:** রাখবে, নাকি শুধু ripple? (আমার পরামর্শ: শুধু ripple। রাখলে S07-কে অন্তত ২০ frame দিতে হবে, সেটা S09 বা S12 থেকে কাটতে হবে।)
-3. **পানি কোন পাশে:** নতুন SOP অনুযায়ী বাঁয়ে? (যেটাই হোক, একটা।)
+| # | সিদ্ধান্ত | এর মানে |
+|---|---|---|
+| ১ | **Game-এর নাম সহ version-ই main** | TV-তে title থাকবে। ACI/Yamaha-র লিখিত clearance tracker-এ একটা খোলা item হিসেবে থাকবে (step ০১, ৩৫)। TV-র লেখা আলাদা AE layer, তাই পরে বদলাতে হলে শুধু layer বদলালেই হবে |
+| ২ | **Puddle-এ শুধু ripple** | S07-এ স্বপ্নের শহরের reflection নেই। Ripple-এর উজ্জ্বল ring টা beam-এর patch-এর সাথে match cut |
+| ৩ | **পানি বাঁয়ে, দোকান আর building ডানে** | রাস্তা ডানে বাঁকে। Bike বাঁ lane-এ চলে (বাংলাদেশে বাঁ দিক দিয়ে চলা), তাই পানির পাশের curb আর rail bike-এর ঠিক পাশে |
 
 ---
 
@@ -239,8 +241,8 @@ Script লেখা, low-res Blender proof (৫৪০×৯৬০, প্রত�
 | Blender proof script (`mt15_blender_proof/proof.py`) | আছে, চলে |
 | Proof v2: curb-side ৫s, aerial ২s, chase ২s | আছে (`mt15_blender_proof/out/`) |
 | Scene file (`.blend`) | আছে |
-| নতুন map অনুযায়ী ঘোরানো | বাকি (step ১৫) |
-| চাকা সহ hero camera | বাকি (step ১৬–১৭) |
+| নতুন map অনুযায়ী সাজানো (পানি বাঁয়ে) | হয়েছে, proof v3 |
+| সামনের চাকা (cyan rim, gold fork, fender, disc) আর hero camera | হয়েছে, proof v3 (`out/v3_water_left_hero_wheel/`) |
 | Animatic | বাকি, latest board লাগবে (step ০৭) |
 | Product test | বাকি, তোমার approval লাগবে (step ১৩) |
 
