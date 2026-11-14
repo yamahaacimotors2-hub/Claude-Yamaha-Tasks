@@ -30,6 +30,7 @@ LOOKS = {   # gain per channel, contrast, saturation
     "rain": ((0.94, 1.00, 1.08), 1.12, 0.92),
     "macro": ((1.00, 1.00, 1.02), 1.08, 1.10),
     "dusk": ((1.04, 0.99, 1.03), 1.10, 1.16),
+    "plate": ((1.00, 1.00, 1.00), 1.04, 1.00),      # generated footage: already lit and graded
 }
 
 
@@ -168,10 +169,11 @@ def main():
                 Image.fromarray((a * 255).astype(np.uint8)).save(os.path.join(out_dir, f"{g:04d}.png"))
                 g += 1
             continue
+        plate = os.path.exists(os.path.join(frames_dir, shot, "PLATE"))   # generated footage, not CG
         for f in range(1, n + 1):
             a = load(os.path.join(frames_dir, shot, f"f{f:04d}.png"))
-            a = grade(a, look)
-            amount = {"S04": 1.0, "S06": 1.0, "S07": 0.55}.get(shot, 0.0)
+            a = grade(a, "plate" if plate else look)
+            amount = 0.0 if plate else {"S04": 1.0, "S06": 1.0, "S07": 0.55}.get(shot, 0.0)
             if shot == "S05":                                      # time is frozen until the burst
                 amount = float(np.clip((f - 20) / 8, 0, 1)) * 0.8
             if amount:
@@ -180,7 +182,7 @@ def main():
                     yy = np.linspace(0, 1, streaks.shape[0], dtype=np.float32)[:, None, None]
                     streaks = streaks * np.clip((yy - 0.20) / 0.06, 0, 1) * np.clip((0.60 - yy) / 0.06, 0, 1)
                 a = a + streaks * np.array((0.80, 0.88, 1.0), dtype=np.float32)
-            a = finish(a, rng)
+            a = finish(a, rng, bloom=0.16 if plate else 0.34)
             Image.fromarray((upscale(a) * 255).astype(np.uint8)).save(os.path.join(out_dir, f"{g:04d}.png"))
             g += 1
         print("comped", shot, g, flush=True)

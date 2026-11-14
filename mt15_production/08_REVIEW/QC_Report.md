@@ -46,3 +46,11 @@ Raw output: `technical_qc_v001.txt`.
 - Phone full-screen check of safe areas and readability.
 - Codex review pass.
 - Higgsfield shots, After Effects / Premiere / Photoshop steps on Niloy's machine.
+
+---
+## v002 addendum (14 Nov 2026)
+Only change from v001: **S06 is now the Higgsfield take** (Seedance 2.5 from a GPT Image 2.6 keyframe), so the
+film has a moving, product-accurate MT-15 in one shot. Same length, same sound. Technical check repeated:
+384 frames, 16.000 s, -14.2 LUFS, no decode errors (`technical_qc_v002.txt`).
+New continuity note: the generated road in S06 already has a waterside railing and street lamps, while the
+CG shots around it show that side unfinished.

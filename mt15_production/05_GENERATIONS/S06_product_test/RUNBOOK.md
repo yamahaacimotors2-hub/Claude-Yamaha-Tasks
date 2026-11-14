@@ -1,8 +1,16 @@
 # S06 product test — runbook (Plan A, approved: 1 take, 720p, 4 s, 28 credits)
 
-**Status: not run.** The cloud session that prepared this could price Higgsfield jobs but its
-generate and upload tools were not loaded, so the test has to be started from the Claude app chat
-(with the Higgsfield connector) or from the Higgsfield website.
+**Status: RUN on 14 Nov 2026 from the Claude Code session. Gate 3: PASS (judged from sampled frames).**
+
+| Step | Model | Job ID | Credits | Result |
+|---|---|---|---|---|
+| Keyframe | GPT Image 2.6, 9:16, default quality | `bde69c92-19ff-46b2-b8f9-5baa3755653b` | 0.25 | `K06_S06_keyframe_v001.png` |
+| Video | Seedance 2.5, omni_reference, 4 s, 720p, audio off | `5463d145-a652-4467-a945-3d3e8c751cae` | 28 | `S06_seedance_take01_720p.mp4` |
+
+Checked against the official photo on the first, two middle and last frames: tank graphics, gold fork,
+cyan rims, exhaust, tank logo and proportions hold for the whole clip. Small differences that stay
+constant: the brake disc carrier has larger cut-outs than the real one, and the lit position lights are a
+little larger. Frames 36-59 of the take are in the film as shot S06 from master v002.
 
 ## Files in this folder
 - `MT15_V2_Cyan_Storm.png` — official product photo. The only product reference.
