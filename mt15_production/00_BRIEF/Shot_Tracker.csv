@@ -1,0 +1,13 @@
+shot,timecode_in,frames,input_refs,owner_hat,status,version,quote,job_id,issue,approval
+S01,00:00.00,30,04_CG/film.py + textures/tv_3_named.png,CG,review,v001,n/a (CG),,CG stand-in: no face; Higgsfield take planned,
+S02,00:01.25,20,04_CG/film.py,CG,review,v001,n/a (CG),,CG stand-in,
+S03,00:02.08,12,04_CG/film.py,CG,review,v001,n/a (CG),,CG stand-in; visor snap instead of buckle,
+S04,00:02.58,34,04_CG/film.py + 06_COMP rain overlay,CG,review,v001,n/a (CG),,CG stand-in; low-poly,
+S05,00:04.00,30,04_CG/film.py,CG,review,v001,n/a (CG),,Burst reads as beads not liquid,
+S06,00:05.25,24,04_CG/film.py,CG,review,v001,n/a (CG),,PROXY BIKE - not product accurate; Higgsfield product test planned,
+S07,00:06.25,14,04_CG/film.py,CG,review,v001,n/a (CG),,,
+S08,00:06.83,72,04_CG/film.py,CG,review,v001,n/a (CG),,720x1280 upscaled; final needs 1080x1920 on GPU,
+S09,00:09.83,36,04_CG/film.py,CG,review,v001,n/a (CG),,Water side dark,
+S10,00:11.33,30,04_CG/film.py,CG,review,v001,n/a (CG),,PROXY BIKE seen from behind,
+S11,00:12.58,40,04_CG/film.py + textures/tv_4_named.png,CG,review,v001,n/a (CG),,CG stand-in,
+S12,00:14.25,42,01_REFERENCES/MT15_V2_Cyan_Storm.png + BG12 render,comp,review,v001,n/a,,Logo is a placeholder,

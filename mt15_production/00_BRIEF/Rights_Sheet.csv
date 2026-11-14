@@ -1,0 +1,13 @@
+asset,file,source,intended_use,owner_or_license,clearance_status
+Official product photo,01_REFERENCES/MT15_V2_Cyan_Storm.png,Yamaha / ACI Motors (supplied by client),End card product image and QC reference,Yamaha / ACI Motors,Supplied by client - confirm written OK for ad use
+Game title text on TV,04_CG/textures/tv_3_named.png and tv_4_named.png,Typed plain text - no logo no typeface no artwork from the game,Opening and closing TV screen,Title is a third-party trademark,PENDING - written clearance from ACI/Yamaha needed before publishing
+Title-free TV screens,04_CG/textures/tv_3_clean.png and tv_4_clean.png,Made in this project,Fallback for the TV screen,Project,Clear
+TV preview art,04_CG/textures/preview.png,Rendered from our own Blender scene,Picture inside the TV screen,Project,Clear
+Yamaha logo,04_CG/textures/logo_placeholder.png,PLACEHOLDER ONLY,End card,Yamaha,MISSING - official logo file needed from ACI
+Bangla tagline,04_CG/textures/tagline.png,Typeset in this project,End card,Project (copy approved by client),Confirm final wording
+Font Hind Siliguri,04_CG/fonts/hind-siliguri-*.woff2,Fontsource / Indian Type Foundry,Bangla tagline,SIL Open Font License 1.1,Clear - replace if a brand font is supplied
+Font Inter,04_CG/fonts/inter-*.woff2,Fontsource / Rasmus Andersson,Latin text,SIL Open Font License 1.1,Clear
+All 3D scenes and renders,04_CG/film.py and mt15_blender_proof/proof.py,Built in this project with Blender,All CG shots,Project,Clear
+Sound effects and music,07_EDIT_SOUND/audio.py,Synthesised from scratch - no samples or recordings,Full soundtrack v1,Project,Clear
+Motorcycle 3D model,none,Front wheel fork and fender modelled here; rest is an unbranded proxy,CG shots,Project,No official 3D asset exists (confirmed by ACI)
+Reference storyboards,01_REFERENCES/*storyboard*,Earlier AI generated boards,Reference only - not in the film,Project,Not used in export
