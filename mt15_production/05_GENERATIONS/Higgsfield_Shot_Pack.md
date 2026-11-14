@@ -21,9 +21,18 @@
 শুধু **S06 এক take** চালাও। পাস করলে S01+S02 আর S11। বাকিগুলো v1 দেখে ঠিক করো।
 
 ## সব shot-এর common settings
-9:16 · audio off · test-এ 720p, final-এ 1080p · ৫ সেকেন্ডের take (film-এ trim হবে) · প্রতিটার job ID `00_BRIEF/Shot_Tracker.csv`-তে।
+9:16 · audio off · test-এ 720p, final-এ 1080p · ৪ সেকেন্ডের take (film-এ trim হবে) · প্রতিটার job ID `00_BRIEF/Shot_Tracker.csv`-তে।
 
-Start frame হিসেবে v1-এর frame ব্যবহার করো: `08_REVIEW/stills/` folder-এ প্রতিটা shot-এর একটা still আছে। এতে camera angle আর composition v1-এর সাথে মিলবে।
+**v1-এর CG still সরাসরি video-র start frame হিসেবে দিও না।** ওগুলো low-poly, আর bike টা box proxy; video সেটাই চালিয়ে দেবে। দুই ধাপে করো: (১) GPT Image 2.6 দিয়ে photoreal keyframe বানাও, CG still শুধু camera angle আর composition দেখানোর জন্য (প্রতি image ০.২৫ credit), (২) সেই keyframe থেকে Seedance 2.5 দিয়ে video। Keyframe-এই product ভুল ধরা পড়লে video-র credit বাঁচে। উদাহরণ: `S06_product_test/RUNBOOK.md`।
+
+## Live দাম (connector থেকে নেওয়া, 9:16)
+| জিনিস | দাম |
+|---|---|
+| Seedance 2.5, 720p | সেকেন্ডে ৭ credit (৪s = ২৮, ৫s = ৩৫) |
+| Seedance 2.5, 1080p | সেকেন্ডে ১৬ credit (৪s = ৬৪, ৫s = ৮০) |
+| GPT Image 2.6 | প্রতি image ০.২৫ credit |
+
+সব shot ৩ সেকেন্ডের নিচে, তাই ৪ সেকেন্ডের take যথেষ্ট। ৮ shot × ২ test take (720p) + ৮ final (1080p) + ২৪ image = ৯৬৬ credit।
 
 ## Prompt
 
