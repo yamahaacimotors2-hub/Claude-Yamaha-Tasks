@@ -20,7 +20,7 @@ SR, FPS, DUR = 48000, 24, 16.0
 N = int(SR * DUR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(4)
-CUT = {"S01": 0, "S02": 30, "S03": 50, "S04": 62, "S05": 90, "S06": 126, "S07": 150, "S08": 162,
+CUT = {"S01": 0, "S02": 30, "S03": 50, "S04": 66, "S05": 90, "S06": 126, "S07": 150, "S08": 162,
        "S09": 234, "S10": 270, "S11": 306, "S12": 342, "END": 384}
 TRACK = sys.argv[3] if len(sys.argv) > 3 else None       # generated music variation, or None for the synth score
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -114,8 +114,8 @@ else:
     place(fx, tone(2637, 0.9, 0.22, (1.0, 0.4, 0.15)), T["S02"] + 12 / FPS, 0.10)
     cue(T["S02"] + 12 / FPS, "idea: glint ting on the visor", "FOLEY")
 snap = click(0.05, 1500, 9000, 0.006) * 0.9 + np.pad(tone(140, 0.05, 0.02), (0, 0))[: int(0.05 * SR)] * 0.8
-place(fx, snap, T["S03"] + 7 / FPS, 0.34)
-cue(T["S03"] + 7 / FPS, "visor snaps shut", "FOLEY")
+place(fx, snap, T["S03"] + 10 / FPS, 0.34)
+cue(T["S03"] + 10 / FPS, "visor snaps shut", "FOLEY")
 
 # ---- vehicle: one continuous synthesised engine voice (never a recording). Level and pitch follow curves,
 # so nothing steps at a cut. It swells and passes in the stall shot, is silent for the whole raindrop shot
@@ -151,13 +151,13 @@ if TRACK and os.path.exists(REV_FILE):
     rev = np.frombuffer(raw, "<f4").astype(np.float64)[int(0.75 * SR):]    # skip the starter motor
     rev /= np.sqrt((rev ** 2).mean())
     laid = np.zeros(N)
-    place(laid, rev, REV_T - 0.05)                                         # the effect's rev (1.2-1.7 s in) -> 2.55-3.05 s
-    rev_level = curve([(REV_T - 0.05, 0), (REV_T + 0.5, 0.030), (S4 - 0.05, 0.050), (S4 + 0.30, 0.085),
+    place(laid, rev, S4 - 1.23)                                            # the effect's rev (1.2-1.7 s in) lands on the cut
+    rev_level = curve([(S4 - 1.23, 0), (S4 - 0.70, 0.030), (S4 - 0.05, 0.050), (S4 + 0.30, 0.085),
                        (S5 - 0.25, 0.060), (S5 - 0.02, 0.020), (S5 + 0.08, 0)])
     veh += (laid * outside + bandpass(laid, 40, 480) * 1.5 * (1 - outside)) * rev_level
     veh += 0.55 * tyres * outside * level * (t < S5 + 0.06) * 0.6          # wet tyres under the pass-by
     level = level * (t > S5 + 0.06)                                        # the synth voice only from the ride on
-    cue(REV_T, "the idea: engine idle fades in inside the room, muffled (generated sound effect)", "VEHICLE")
+    cue(S4 - 1.23, "the idea: engine idle fades in inside the room, muffled (generated sound effect)", "VEHICLE")
     cue(S4 - 0.03, "the rev lands on the cut to the road and runs through the pass-by", "VEHICLE")
 elif TRACK:
     cue(REV_T, "the idea: engine starts in the room, muffled, two rising revs, runs into the pass-by", "VEHICLE")

@@ -41,3 +41,8 @@ Rebuild: `python3 06_COMP/takes.py FRAMES`, `python3 06_COMP/stills.py --screen 
 ## Latest: v011 (14 Nov 2026)
 Sound only: a very low tension bed under the opening room. `MT15_master_v011.mp4`, `MT15_mobile_v011.mp4`.
 Rebuild: `./finish.sh FRAMES WORK v011 A`. Status: **review, not for publishing**.
+
+## Latest: v012 (14 Nov 2026)
+Helmet shot (S03) replaced with the clip the owner supplied. `MT15_master_v012.mp4`, `MT15_mobile_v012.mp4`.
+Rebuild: `python3 06_COMP/takes.py FRAMES`, `python3 06_COMP/stills.py --screen FRAMES tv_3_named.png S01 S02`,
+`./finish.sh FRAMES WORK v012 A`. Status: **review, not for publishing**.

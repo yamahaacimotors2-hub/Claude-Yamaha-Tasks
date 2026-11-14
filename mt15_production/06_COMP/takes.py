@@ -33,12 +33,28 @@ GLANCE = [67 + round(i * 29 / 19) for i in range(20)]
 CUTS = {
     "S01": ("S01_bored_seedance_take01_720p.mp4", 0, 30, BORED),
     "S02": ("S01_bored_seedance_take01_720p.mp4", 0, 20, GLANCE),
-    "S03": ("S03_seedance_take01_720p.mp4", 42, 12, 1),   # visor snaps down on local frame 7
-    "S04": ("S04_seedance_take01_720p.mp4", 50, 28, 1),   # bike clears the stall post and rides out
+    # S03 is a clip supplied by the owner (784x1168, 37 frames): front view, hands at the chin strap, visor closes.
+    # Played at double speed (every second frame); centre-cropped to 9:16. The visor seats on local frame 10.
+    "S03": ("S03_owner_buckle_clip_v001.mp4", 0, 16, [6 + 2 * i for i in range(16)]),
+    "S04": ("S04_seedance_take01_720p.mp4", 54, 24, 1),   # bike clears the stall post and rides out
     "S05": ("S05_seedance_take01_720p.mp4", 24, 36, 1),   # beam arrives, drop bursts on local frame 12
     "S09": ("S09_seedance_take01_720p.mp4", 24, 36, 2),   # the city builds under the aerial, double speed
     "S10": ("S10_seedance_take01_720p.mp4", 6, 36, 1),
 }
+
+
+def fit(im):
+    """Any source to 720x1280: centre-crop to 9:16 if it is another shape, then resize."""
+    w, h = im.size
+    if (w, h) == (720, 1280):
+        return im
+    if w * 16 > h * 9:
+        cw = round(h * 9 / 16)
+        im = im.crop(((w - cw) // 2, 0, (w - cw) // 2 + cw, h))
+    elif w * 16 < h * 9:
+        ch = round(w * 16 / 9)
+        im = im.crop((0, (h - ch) // 2, w, (h - ch) // 2 + ch))
+    return im.resize((720, 1280), Image.LANCZOS)
 
 
 def cut(frames_dir, shot):
@@ -63,7 +79,7 @@ def cut(frames_dir, shot):
     os.makedirs(d)
     for i in range(n):
         src = [picks[i]] if picks else [i * step + k for k in range(step)]
-        group = [np.asarray(Image.open(os.path.join(tmp, got[k])).convert("RGB"), dtype=np.float32) for k in src]
+        group = [np.asarray(fit(Image.open(os.path.join(tmp, got[k])).convert("RGB")), dtype=np.float32) for k in src]
         Image.fromarray(np.mean(group, axis=0).astype(np.uint8)).save(os.path.join(d, f"f{i + 1:04d}.png"))
     open(os.path.join(d, "PLATE"), "w").close()
     shutil.rmtree(tmp)

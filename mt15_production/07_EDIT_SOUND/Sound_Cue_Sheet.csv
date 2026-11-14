@@ -2,12 +2,12 @@ frame,seconds,track,cue
 0,0.000,AMBIENCE,"room tone, TV fan"
 0,0.000,MUSIC,"tension bed, very low: dark drone made from the track's own harmony, soft pulse on the beat, slow swell"
 6,0.250,AMBIENCE,"boredom: wall clock tick-tock every 0.5 s (on the beat grid), slow ceiling fan"
-34,1.400,VEHICLE,"the idea: engine idle fades in inside the room, muffled (generated sound effect)"
-57,2.375,FOLEY,visor snaps shut
-61,2.553,VEHICLE,the rev lands on the cut to the road and runs through the pass-by
-62,2.583,AMBIENCE,"rain bed in, starting two frames ahead of the cut"
-62,2.583,MUSIC,"music track A enters with the rain, filtered, opening up; the tension bed hands over to it"
-62,2.583,VEHICLE,"engine and wet-tyre pass-by: swells, peaks as the bike crosses, falls away (synth)"
+36,1.520,VEHICLE,"the idea: engine idle fades in inside the room, muffled (generated sound effect)"
+60,2.500,FOLEY,visor snaps shut
+65,2.720,VEHICLE,the rev lands on the cut to the road and runs through the pass-by
+66,2.750,AMBIENCE,"rain bed in, starting two frames ahead of the cut"
+66,2.750,MUSIC,"music track A enters with the rain, filtered, opening up; the tension bed hands over to it"
+66,2.750,VEHICLE,"engine and wet-tyre pass-by: swells, peaks as the bike crosses, falls away (synth)"
 90,3.750,MUSIC,music out: time stops on the drop
 90,3.750,VEHICLE,engine out for the whole raindrop shot
 90,3.750,VFX,"time freezes: rain and engine drop out, glass tone"

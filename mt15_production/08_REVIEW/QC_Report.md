@@ -194,3 +194,20 @@ Owner note on v010: the opening needs a tension background music, playing very l
 Technical check: 384 frames, 16.000 s, no decode errors (`technical_qc_v011.txt`). Measured, not listened to.
 If the bed does not read as tension by ear, the alternative is a short generated suspense cue (2.33 credits
 for one, 9.32 for four variations), which needs the owner's approval.
+
+---
+## v012 addendum (14 Nov 2026) — owner's clip for the helmet shot, no generation cost
+- **S03 is now the clip the owner supplied** (`05_GENERATIONS/takes/S03_owner_buckle_clip_v001.mp4`, 784x1168,
+  37 frames): front view of the helmet, gloved hands at the chin strap, the dark visor closes. The Seedance
+  visor take is out of the cut.
+- Fitted as: centre-cropped to 9:16, every second frame (double speed), 16 frames in the film (was 12).
+  The 4 extra frames come from the tea-stall shot (S04, now 24). The visor seats on local frame 10, where the
+  click is. The engine rev stays anchored on the cut to the road, which moved to frame 66 (2.75 s).
+- Things to know about this clip:
+  1. The helmet and both gloves carry **Yamaha wordmarks and tuning-fork emblems**. If the clip is generated,
+     the marks are drawn by the model, not placed from the official file: ACI should check them before publishing.
+  2. Continuity: here the visor is dark and the helmet has a logo; in the riding shots the helmet is plain and
+     in the last room shot the visor is clear. The clip is also near black-and-white on a grey background,
+     while the room shots are blue and amber.
+  3. Source and rights of the clip are not recorded; added to the rights sheet as owner-supplied, to confirm.
+Technical check: 384 frames, 16.000 s, -14.1 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v012.txt`).
