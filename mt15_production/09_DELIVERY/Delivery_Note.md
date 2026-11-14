@@ -32,3 +32,8 @@ Music track A (chosen by the owner), smoother engine and rain, new helmet sound.
 ## Latest: v009 (14 Nov 2026)
 Sound only: bored room (clock, fan, no music), engine revs fade in on the helmet shot, music enters with the rain.
 `MT15_master_v009.mp4`, `MT15_mobile_v009.mp4`. Rebuild: `./finish.sh FRAMES WORK v009 A`. Status: **review**.
+
+## Latest: v010 (14 Nov 2026)
+New opening (bored face, glance at the helmet) and a generated engine rev. `MT15_master_v010.mp4`, `MT15_mobile_v010.mp4`.
+Rebuild: `python3 06_COMP/takes.py FRAMES`, `python3 06_COMP/stills.py --screen FRAMES tv_3_named.png S01 S02`,
+`./finish.sh FRAMES WORK v010 A`. Status: **review, not for publishing**.

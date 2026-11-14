@@ -1,6 +1,6 @@
 shot,frame_in,frame_out_exclusive,frames,seconds,old_sop_keyframes,what_reads,how_made_v1,final_plan
-S01,0,30,30,1.25,01,TV download 3% then slumped figure,Blender CG,Higgsfield take from one room still
-S02,30,50,20,0.83,02,Helmet under the TV; glint = the idea,Blender CG,Higgsfield (same take as S01)
+S01,0,30,30,1.25,01,Bored face on the sofa; TV download 3% behind him,Seedance 2.5 take (v010) + screen comp,Seedance 2.5 take at 1080p
+S02,30,50,20,0.83,02,Eyes go to the helmet; half-smile = the idea,Same take as S01 (v010),Same take as S01
 S03,50,62,12,0.50,03,Visor snaps shut,Seedance 2.5 take (v006),Seedance 2.5 take
 S04,62,90,28,1.17,04,Rainy Dhaka from the tea stall; bike passes,Blender CG + rain overlay,Higgsfield from a Blender layout frame
 S05,90,126,36,1.50,05+06,Hanging drop; beam enters; amber-magenta liquid burst,Seedance 2.5 take (v006),Seedance 2.5 take at 1080p

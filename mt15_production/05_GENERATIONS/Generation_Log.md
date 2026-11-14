@@ -24,7 +24,11 @@ All runs on the same Higgsfield account. Credits are what the connector quoted b
 
 | Music A-D | all | ElevenLabs Music v2.5, 16 s, instrumental, 4 variations (2.33 each) | A `db6893f6-4667-4e3b-862d-435a74d2124d`, B `418dbd2e-b462-4874-9a53-fef7308a654e`, C `810a6456-2aa9-46d9-ae75-d27381cdbf51` (came back 25 s long), D `fd10c284-7011-4d50-90c9-6fded5b552ec` | 9.32 | `../07_EDIT_SOUND/music/MT15_music_A-D.mp3` | All four are 120 BPM. Measured, not listened to: D has a quiet build and a hard drop at 6.03 s; A and B run at full level from the start with the drums lifting at 8.03 s; C fades in and has a dotted rhythm. Film v007; **owner chose A** (film v008) |
 
-Total from this session: **238.57 credits** (237.57 approved in advance; 0.75 on K04/K10 keyframes was run without asking; 0.25 on the K06 keyframe was announced beforehand).
+| K01 bored v001 | S01+S02 | GPT Image 2.6, 9:16, default quality; references: character sheet, expressions, empty room, helmet, storyboard panel 01 | `1103baef-0d46-4718-998e-bf75a63ba2bf` | 0.25 | `keyframes/K01_S01_bored_keyframe_v001.png` | Pass: cheek on fist, bored face, blank blue TV fully visible, helmet on the console, same room |
+| S01 bored take01 | S01+S02 | Seedance 2.5, omni_reference (keyframe as start frame), 4 s, 720p, audio off | `073337a6-1b33-494a-af8a-2c7c5b2a2979` | 28 | `takes/S01_bored_seedance_take01_720p.mp4` | Pass. Locked-off camera, TV stays blank blue. Bored stare, long eyes-closed sigh, eyes to the helmet at about 2.8 s, smile at about 3.6 s: slower than asked, so it is retimed (2.3x, then 1.5x) to fit 50 frames. Film v010 |
+| Rev SFX v001 | S02-S04 | Mirelo text-to-audio, 4 s | `94b90a2e-e4af-44ef-bb81-6b3294d27e56` | 1 | `../07_EDIT_SOUND/sfx/MT15_sfx_bike_rev_v001.mp3` | Measured, not listened to: starter 0.2-0.6 s, idle, one rev at 1.9-2.5 s, idle. Used from 0.75 s on (no starter). Film v010 |
+
+Total from this session: **267.82 credits** (266.82 approved in advance; 0.75 on K04/K10 keyframes was run without asking; 0.25 on the K06 keyframe was announced beforehand).
 Rule since then: no credit is spent without the owner's approval of a live quote.
 
 ## Run in ChatGPT (stills now in `stills_chatgpt/`, job IDs in `stills_chatgpt/SHOT_LOG_chatgpt.md`)

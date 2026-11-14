@@ -164,3 +164,19 @@ boring room, then a bike revving that comes in smoothly, then the instrumental m
   storyboard panels 01 and 02 (bored face beside the TV, then a glance at the helmet) need a new generated take.
 Technical check: 384 frames, 16.000 s, no decode errors (`technical_qc_v009.txt`). Engine and clock are still
 synthesised; a recorded-sounding rev would need a generated sound effect (1 credit quoted).
+
+---
+## v010 addendum (14 Nov 2026) — new opening shot and rev sound, 29.25 credits (approved)
+- **S01 + S02 are now one generated take of the man's face** (storyboard panels 01 and 02): slumped on the sofa,
+  cheek on his fist, a slow heavy blink and sigh, then his eyes go to the helmet and he half-smiles.
+  The download screen ("GTA VI 3%") is composited onto the blank blue TV behind him, frame by frame; his hair
+  stays in front of it. The old S01 (man from behind) and S02 (helmet still with a glint) are out.
+- The take ran slower than asked, so it is retimed: the boredom at 2.3x (the long sigh reads as one slow blink),
+  the glance and smile at 1.5x. Frame-accurate picks, no blending. Worth watching for jerkiness in the glance.
+- **Engine from the glance to the end of the pass-by is a generated, recording-like effect**, not the synth:
+  its idle fades in muffled in the room at 1.35 s, its rev lands on the cut to the road (about 2.55 - 3.05 s),
+  and it falls away as time stops on the raindrop. The synth engine is used only under the music from 5.25 s.
+- Continuity notes: his hair is fuller in the opening than the face inside the helmet in S03 suggests;
+  S11 (last room shot) is still the old still seen from behind, with the helmet on.
+Technical check: 384 frames, 16.000 s, -14.1 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v010.txt`).
+Sound still measured only, not listened to, on this side.

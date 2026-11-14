@@ -8,7 +8,8 @@ Bangla tagline,04_CG/textures/tagline.png,Typeset in this project,End card,Proje
 Font Hind Siliguri,04_CG/fonts/hind-siliguri-*.woff2,Fontsource / Indian Type Foundry,Bangla tagline,SIL Open Font License 1.1,Clear - replace if a brand font is supplied
 Font Inter,04_CG/fonts/inter-*.woff2,Fontsource / Rasmus Andersson,Latin text,SIL Open Font License 1.1,Clear
 All 3D scenes and renders,04_CG/film.py and mt15_blender_proof/proof.py,Built in this project with Blender,All CG shots,Project,Clear
-Sound effects,07_EDIT_SOUND/audio.py,Synthesised from scratch - no samples or recordings,All sound effects,Project,Clear
+Sound effects,07_EDIT_SOUND/audio.py,Synthesised from scratch - no samples or recordings,All sound effects except the engine rev,Project,Clear
+Engine rev sound effect,07_EDIT_SOUND/sfx/MT15_sfx_bike_rev_v001.mp3,Generated with Mirelo text-to-audio through Higgsfield from our own prompt,Engine from 1.35 s to 3.75 s,Account holder under Higgsfield terms,CHECK - same commercial-use check as the music
 Music (four candidate tracks),07_EDIT_SOUND/music/MT15_music_A-D.mp3,Generated with ElevenLabs Music v2.5 through Higgsfield from our own text prompt - original 1980s-style synthwave; no game music no named artist or song in the prompt,Soundtrack from v007,Account holder under Higgsfield / ElevenLabs terms,CHECK - confirm the Higgsfield plan allows commercial ad use of generated music before publishing
 Motorcycle 3D model,none,Front wheel fork and fender modelled here; rest is an unbranded proxy,CG shots,Project,No official 3D asset exists (confirmed by ACI)
 Reference storyboards,01_REFERENCES/*storyboard*,Earlier AI generated boards,Reference only - not in the film,Project,Not used in export

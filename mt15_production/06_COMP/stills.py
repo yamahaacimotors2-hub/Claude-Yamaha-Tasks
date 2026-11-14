@@ -44,6 +44,45 @@ def tv_quad(im):
     return [pick(-(xx + yy)), pick(xx - yy), pick(xx + yy), pick(yy - xx)]
 
 
+def tv_quad_lines(im):
+    """Corners of the blue screen from its four edges, so a corner hidden behind something is still found.
+    Each edge is a straight line fitted to the screen boundary, with points off the line (hair, a hand) dropped."""
+    a = np.asarray(im, dtype=np.float32) / 255.0
+    mask = (a[..., 2] > 0.60) & (a[..., 0] < 0.25) & (a[..., 1] < 0.25)
+    cols, rows = mask.sum(0), mask.sum(1)
+    xs = np.where(cols > cols.max() * 0.5)[0]
+    ys = np.where(rows > rows.max() * 0.5)[0]
+    x0, x1, y0, y1 = xs[0], xs[-1], ys[0], ys[-1]
+
+    def fit(u, v):                                        # v = m*u + c: the line most boundary points agree on
+        u, v = np.asarray(u, dtype=np.float64), np.asarray(v, dtype=np.float64)
+        pick = np.random.default_rng(0)
+        best = None
+        for _ in range(400):
+            i, j = pick.choice(len(u), 2, replace=False)
+            if u[i] == u[j]:
+                continue
+            m = (v[j] - v[i]) / (u[j] - u[i])
+            ok = np.abs(v - (m * u + v[i] - m * u[i])) <= 1.5
+            if best is None or ok.sum() > best.sum():
+                best = ok
+        return np.polyfit(u[best], v[best], 1)
+
+    cx = np.arange(x0 + (x1 - x0) // 8, x1 - (x1 - x0) // 8)
+    top = fit(cx, [np.argmax(mask[:, x]) for x in cx])
+    bot = fit(cx, [mask.shape[0] - 1 - np.argmax(mask[::-1, x]) for x in cx])
+    cy = np.arange(y0 + (y1 - y0) // 8, y1 - (y1 - y0) // 8)
+    left = fit(cy, [np.argmax(mask[y, :]) for y in cy])                       # x = m*y + c
+    right = fit(cy, [mask.shape[1] - 1 - np.argmax(mask[y, ::-1]) for y in cy])
+
+    def meet(h, v):                                       # y = mh*x + ch  with  x = mv*y + cv
+        (mh, ch), (mv, cv) = h, v
+        y = (mh * cv + ch) / (1 - mh * mv)
+        return (float(mv * y + cv), float(y))
+
+    return [meet(top, left), meet(top, right), meet(bot, right), meet(bot, left)]
+
+
 def perspective_coeffs(dst, src):
     """PIL PERSPECTIVE coefficients that map output (dst) points back to input (src) points."""
     m = []
@@ -54,8 +93,9 @@ def perspective_coeffs(dst, src):
     return np.linalg.solve(np.array(m, dtype=np.float64), b).tolist()
 
 
-def put_screen(im, ui, quad, brightness=1.0):
-    """Corner-pin the UI onto the TV. Keeps some of the plate's own blue so it still lights the room."""
+def put_screen(im, ui, quad, brightness=1.0, behind=False):
+    """Corner-pin the UI onto the TV. Keeps some of the plate's own blue so it still lights the room.
+    behind=True: only pixels that are still screen-blue take the UI, so anything in front of the TV stays in front."""
     inset = 3
     cx, cy = sum(p[0] for p in quad) / 4, sum(p[1] for p in quad) / 4
     q = [(x + inset * np.sign(cx - x), y + inset * np.sign(cy - y)) for x, y in quad]
@@ -68,6 +108,10 @@ def put_screen(im, ui, quad, brightness=1.0):
     a = np.asarray(im, dtype=np.float32) / 255.0
     u = np.asarray(warped, dtype=np.float32) / 255.0
     m = np.asarray(mask, dtype=np.float32)[..., None] / 255.0
+    if behind:
+        blue = ((a[..., 2] > 0.45) & (a[..., 0] < 0.30) & (a[..., 1] < 0.30)).astype(np.uint8) * 255
+        blue = Image.fromarray(blue).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1.0))
+        m = m * np.asarray(blue, dtype=np.float32)[..., None] / 255.0
     screen = np.clip(u * 1.25 * brightness + a * 0.22, 0, 1)        # UI over a little of the original glow
     return Image.fromarray((np.clip(a * (1 - m) + screen * m, 0, 1) * 255).astype(np.uint8))
 
@@ -192,7 +236,25 @@ def drop(stills_dir, frames_dir, n):
     return out
 
 
+def screen_on_take(frames_dir, shots, ui_name):
+    """A generated take with a blank blue TV (locked-off camera): put the download screen on it, frame by frame.
+    The screen corners come from the first frame of the first shot; the shots are consecutive pieces of one take."""
+    ui = Image.open(os.path.join(TEX, ui_name)).convert("RGB")
+    quad = None
+    rng = np.random.default_rng(2)
+    for shot in shots:
+        d = os.path.join(frames_dir, shot)
+        for f in sorted(glob.glob(os.path.join(d, "f*.png"))):
+            im = Image.open(f).convert("RGB")
+            if quad is None:
+                quad = tv_quad_lines(im)
+            put_screen(im, ui, quad, 1.0 + rng.normal(0, 0.012), behind=True).save(f)
+        print("screen ->", shot, [(round(x), round(y)) for x, y in quad], flush=True)
+
+
 def main():
+    if sys.argv[1] == "--screen":                        # stills.py --screen FRAMES_DIR UI.png SHOT [SHOT...]
+        return screen_on_take(sys.argv[2], sys.argv[4:], sys.argv[3])
     stills_dir, frames_dir = sys.argv[1], sys.argv[2]
     only = sys.argv[3:]                                  # optional: shot IDs to rebuild
     jobs = {"S01": lambda: room(stills_dir, "K01", "tv_3_named.png", 30, 1.07),

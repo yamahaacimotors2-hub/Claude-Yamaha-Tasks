@@ -140,12 +140,29 @@ voice = sum(np.sin(phase * k) / k ** 1.5 for k in range(1, 10))            # sof
 voice *= 0.65 + 0.35 * np.sin(phase * 0.5) ** 2                            # firing pulses
 tyres = bandpass(rng.normal(0, 1, N), 700, 5000)                           # tyres on a wet road
 outside = np.clip((t - (S4 - 0.05)) / 0.12, 0, 1)                          # 0 in the room, 1 on the road
+REV_FILE = os.path.join(HERE, "sfx", "MT15_sfx_bike_rev_v001.mp3")         # generated sound effect: idle, one rev, idle
 if not TRACK:
     level = level * (t >= S4 - 0.10)                                       # synth score: no rev in the room
+if TRACK and os.path.exists(REV_FILE):
+    # From the glance at the helmet to the end of the pass-by the engine is the generated recording-like effect:
+    # its idle fades in muffled in the room, its rev lands on the cut to the road, and it falls away as time stops.
+    raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", REV_FILE, "-f", "f32le", "-ac", "1", "-ar", str(SR), "-"],
+                         capture_output=True, check=True).stdout
+    rev = np.frombuffer(raw, "<f4").astype(np.float64)[int(0.75 * SR):]    # skip the starter motor
+    rev /= np.sqrt((rev ** 2).mean())
+    laid = np.zeros(N)
+    place(laid, rev, REV_T - 0.05)                                         # the effect's rev (1.2-1.7 s in) -> 2.55-3.05 s
+    rev_level = curve([(REV_T - 0.05, 0), (REV_T + 0.5, 0.030), (S4 - 0.05, 0.050), (S4 + 0.30, 0.085),
+                       (S5 - 0.25, 0.060), (S5 - 0.02, 0.020), (S5 + 0.08, 0)])
+    veh += (laid * outside + bandpass(laid, 40, 480) * 1.5 * (1 - outside)) * rev_level
+    veh += 0.55 * tyres * outside * level * (t < S5 + 0.06) * 0.6          # wet tyres under the pass-by
+    level = level * (t > S5 + 0.06)                                        # the synth voice only from the ride on
+    cue(REV_T, "the idea: engine idle fades in inside the room, muffled (generated sound effect)", "VEHICLE")
+    cue(S4 - 0.03, "the rev lands on the cut to the road and runs through the pass-by", "VEHICLE")
+elif TRACK:
+    cue(REV_T, "the idea: engine starts in the room, muffled, two rising revs, runs into the pass-by", "VEHICLE")
 engine_snd = bandpass(voice, 55, 1400) * outside + bandpass(voice, 55, 420) * 1.5 * (1 - outside)   # muffled indoors
 veh += (engine_snd + 0.55 * tyres * outside) * level * (1.0 if TRACK else 1.7)
-if TRACK:
-    cue(REV_T, "the idea: engine starts in the room, muffled, two rising revs, runs into the pass-by", "VEHICLE")
 cue(S4, "engine and wet-tyre pass-by: swells, peaks as the bike crosses, falls away (synth)", "VEHICLE")
 cue(S5, "engine out for the whole raindrop shot", "VEHICLE")
 cue(S6, "engine back with the bike", "VEHICLE")
