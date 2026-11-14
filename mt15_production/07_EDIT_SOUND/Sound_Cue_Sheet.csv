@@ -1,16 +1,18 @@
 frame,seconds,track,cue
 0,0.000,AMBIENCE,"room tone, TV fan"
-0,0.000,MUSIC,music track D: held low and muffled in the room
+0,0.000,MUSIC,music track A: held low and muffled in the room
 5,0.200,FOLEY,"UI tick, repeats every 0.5 s"
-42,1.750,FOLEY,idea: glint ting on the visor
+38,1.583,FOLEY,"idea: airy swish with the glint, low heartbeat thump (no bell)"
 57,2.375,FOLEY,visor snaps shut
-62,2.583,AMBIENCE,hard cut to rain bed
+62,2.583,AMBIENCE,"rain bed in, starting two frames ahead of the cut"
 62,2.583,MUSIC,music opens up in the rain
-62,2.583,VEHICLE,engine pass-by (synth)
+62,2.583,VEHICLE,"engine and wet-tyre pass-by: swells, peaks as the bike crosses, falls away (synth)"
 90,3.750,MUSIC,music out: time stops on the drop
+90,3.750,VEHICLE,engine out for the whole raindrop shot
 90,3.750,VFX,"time freezes: rain and engine drop out, glass tone"
 102,4.250,MUSIC,"the drop: full track from here, one beat every 12 frames"
 102,4.250,VFX,"burst: whoosh, low boom, the music drops"
+126,5.250,VEHICLE,engine back with the bike
 153,6.375,FOLEY,drop hits the puddle
 168,7.000,FOLEY,"kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after"
 168,7.000,FOLEY,"rail posts land on the eighths, metal tick"

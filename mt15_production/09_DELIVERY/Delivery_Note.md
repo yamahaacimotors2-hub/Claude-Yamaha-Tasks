@@ -24,3 +24,7 @@ then `./finish.sh FRAMES WORK v006` (S06 and S08 frames come from their takes as
 Cut to music. `MT15_master_v007.mp4` and `MT15_mobile_v007.mp4` carry music track D; `MT15_mobile_v007_musicA/B/C.mp4`
 are the same picture with the other three tracks, for choosing one. Rebuild: `python3 06_COMP/takes.py FRAMES`,
 `./finish.sh FRAMES WORK v007 D`, then `07_EDIT_SOUND/variants.sh WORK v007`. Status: **review, not for publishing**.
+
+## Latest: v008 (14 Nov 2026)
+Music track A (chosen by the owner), smoother engine and rain, new helmet sound. `MT15_master_v008.mp4`,
+`MT15_mobile_v008.mp4`. Rebuild: `./finish.sh FRAMES WORK v008 A`. Status: **review, not for publishing**.

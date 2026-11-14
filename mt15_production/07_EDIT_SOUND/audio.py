@@ -81,45 +81,58 @@ room = bandpass(rng.normal(0, 1, N), 60, 420) * 0.5 + 0.25 * np.sin(2 * np.pi * 
 amb += room * 0.05 * (env(0, T["S04"], 0.3, 0.01) + env(T["S11"], T["END"], 0.01, 0.6))
 rain = bandpass(rng.normal(0, 1, N), 1800, 9000) + 0.5 * bandpass(rng.normal(0, 1, N), 300, 1500)
 freeze = 1 - 0.92 * env(T["S05"], T["S05"] + 0.50, 0.05, 0.10)          # time stops on the hanging drop
-rain_level = env(T["S04"], T["S11"], 0.01, 0.01) * freeze
+rain_level = env(T["S04"] - 0.08, T["S11"], 0.20, 0.01) * freeze                  # leads the cut by two frames
 rain_level *= 1 - 0.55 * env(T["S08"], T["S11"], 0.8, 0.01)             # the rain thins as the city arrives
 amb += rain * 0.060 * rain_level
 cue(T["S01"], "room tone, TV fan", "AMBIENCE")
-cue(T["S04"], "hard cut to rain bed", "AMBIENCE")
+cue(T["S04"], "rain bed in, starting two frames ahead of the cut", "AMBIENCE")
 cue(T["S11"], "hard cut back to room tone", "AMBIENCE")
 
 # ---- room beats
 for k in range(5):                                                       # the download that will not move
     place(fx, tone(1320, 0.05, 0.012), 0.20 + k * 0.5, 0.05)
 cue(0.20, "UI tick, repeats every 0.5 s", "FOLEY")
-place(fx, reverb_small := tone(2637, 0.9, 0.22, (1.0, 0.4, 0.15)), T["S02"] + 12 / FPS, 0.10)
-cue(T["S02"] + 12 / FPS, "idea: glint ting on the visor", "FOLEY")
+glint_t = T["S02"] + 8 / FPS                                              # the glint crosses the visor, frames 8-16
+if TRACK:      # no bell: a soft airy swish that follows the glint, and a low double thump (a heartbeat) under it
+    ns = int(0.42 * SR)
+    swish = bandpass(rng.normal(0, 1, ns), 1400, 7000) * np.sin(np.pi * np.arange(ns) / ns) ** 2
+    place(fx, swish, glint_t - 0.04, 0.045)
+    th = np.arange(int(0.22 * SR)) / SR
+    thump = np.sin(2 * np.pi * (46 * th + 2.2 * (1 - np.exp(-th / 0.03)))) * np.exp(-th / 0.055)
+    place(fx, thump, glint_t + 0.13, 0.30)
+    place(fx, thump, glint_t + 0.30, 0.20)
+    cue(glint_t, "idea: airy swish with the glint, low heartbeat thump (no bell)", "FOLEY")
+else:
+    place(fx, tone(2637, 0.9, 0.22, (1.0, 0.4, 0.15)), T["S02"] + 12 / FPS, 0.10)
+    cue(T["S02"] + 12 / FPS, "idea: glint ting on the visor", "FOLEY")
 snap = click(0.05, 1500, 9000, 0.006) * 0.9 + np.pad(tone(140, 0.05, 0.02), (0, 0))[: int(0.05 * SR)] * 0.8
 place(fx, snap, T["S03"] + 7 / FPS, 0.34)
 cue(T["S03"] + 7 / FPS, "visor snaps shut", "FOLEY")
 
-# ---- vehicle: a synthesised single-cylinder note, never a recording
-def engine(start, end, f0, f1, gain, pan_bias=0.0):
-    seg = (t >= start) & (t < end)
-    u = np.clip((t - start) / (end - start), 0, 1)
-    freq = f0 + (f1 - f0) * u
-    phase = 2 * np.pi * np.cumsum(freq) / SR
-    saw = sum(np.sin(phase * k) / k for k in range(1, 14))
-    pulse = 0.6 + 0.4 * np.sin(phase * 0.5) ** 2                          # firing pulses
-    return bandpass(saw * pulse, 60, 1900) * seg * gain * env(start, end, 0.04, 0.04)
+# ---- vehicle: one continuous synthesised engine voice (never a recording). Level and pitch follow curves,
+# so nothing steps at a cut. It swells and passes in the stall shot, is silent for the whole raindrop shot
+# (macro, slow motion), and comes back with the bike.
+def curve(points):
+    xs, ys = zip(*points)
+    return np.interp(t, xs, ys)
 
 
-veh += engine(T["S04"], T["S05"], 92, 118, 0.20)                          # pass-by from the stall
-veh += engine(T["S05"], T["S06"], 118, 118, 0.20) * freeze
-veh += engine(T["S06"], T["S07"], 118, 126, 0.24)
-veh += engine(T["S07"], T["S08"], 126, 126, 0.10)
-veh += engine(T["S08"], T["S09"], 126, 132, 0.17)
-veh += engine(T["S09"], T["S10"], 132, 132, 0.08)                         # heard from the air
-veh += engine(T["S10"], T["S11"], 132, 150, 0.22)
-if TRACK:
-    veh *= np.where(t < T["S05"] + 0.5, 1.0, 0.55)                        # the music carries the ride
-cue(T["S04"], "engine pass-by (synth)", "VEHICLE")
-cue(T["S10"], "engine opens up", "VEHICLE")
+S4, S5, S6, S7, S8, S9, S10, S11 = (T[k] for k in ("S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11"))
+pitch = curve([(S4, 101), (S4 + 0.75, 104), (S5, 96),                     # passes the stall: pitch falls away
+               (S6, 118), (S7, 124), (S8, 126), (S9, 132), (S10, 132), (S11, 150)])
+level = curve([(S4 - 0.10, 0), (S4 + 0.15, 0.035), (S4 + 0.75, 0.105), (S5 - 0.08, 0.05), (S5 + 0.06, 0),
+               (S6 - 0.06, 0), (S6 + 0.12, 0.11), (S7 - 0.05, 0.10), (S7 + 0.08, 0.05),
+               (S8 - 0.04, 0.05), (S8 + 0.12, 0.09), (S9 - 0.05, 0.09), (S9 + 0.10, 0.045),   # heard from the air
+               (S10 - 0.05, 0.045), (S10 + 0.12, 0.11), (S11 - 0.006, 0.12), (S11, 0)])
+phase = 2 * np.pi * np.cumsum(pitch) / SR
+voice = sum(np.sin(phase * k) / k ** 1.5 for k in range(1, 10))            # softer than a raw saw
+voice *= 0.65 + 0.35 * np.sin(phase * 0.5) ** 2                            # firing pulses
+tyres = bandpass(rng.normal(0, 1, N), 700, 5000)                           # tyres on a wet road
+veh += (bandpass(voice, 55, 1400) + 0.55 * tyres) * level * (1.0 if TRACK else 1.7)
+cue(S4, "engine and wet-tyre pass-by: swells, peaks as the bike crosses, falls away (synth)", "VEHICLE")
+cue(S5, "engine out for the whole raindrop shot", "VEHICLE")
+cue(S6, "engine back with the bike", "VEHICLE")
+cue(S10, "engine opens up", "VEHICLE")
 
 # ---- the raindrop
 glass = tone(3520, 0.6, 0.25, (1.0, 0.3)) + tone(5274, 0.6, 0.2)
@@ -131,7 +144,7 @@ place(fx, whoosh, burst_t, 0.42 if TRACK else 0.30)
 tb = np.arange(int(0.6 * SR)) / SR
 boom = np.sin(2 * np.pi * (38 * tb + 9.0 * (1 - np.exp(-tb / 0.06)))) * np.exp(-tb / 0.16)   # pitch falls 190 -> 38 Hz
 if TRACK:
-    place(fx, boom, burst_t, 0.45)
+    place(fx, boom, burst_t, 0.32)
 else:
     place(mus, tone(220, 1.2, 0.5, (1.0, 0.5, 0.3)) + tone(277.18, 1.2, 0.5, (1.0, 0.4)) + tone(329.63, 1.2, 0.5),
           burst_t, 0.10)

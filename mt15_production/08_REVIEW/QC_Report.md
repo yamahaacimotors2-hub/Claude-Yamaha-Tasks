@@ -128,3 +128,21 @@ Checked by measurement only: kicks sit within about 10 ms of the beat grid in A,
 that could not be checked the same way. **Nobody has listened to these mixes yet** — the choice of track and
 the balance of music against effects need the owner's ears.
 Technical check: 384 frames, 16.000 s, -14.3 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v007.txt`).
+
+---
+## v008 addendum (14 Nov 2026) — no generation cost
+Owner notes on v007: **track A chosen**; the bike sound around seconds 2-4 was odd and the mix should be
+smoother; the bell on the helmet shot should be something else.
+- **Engine rebuilt as one continuous voice.** Before, each shot had its own gated engine segment, so the level
+  stepped at every cut: it came in hard and loud at 2.58 s (about 12 dB above the room), and a steady 118 Hz note
+  kept running over the slow-motion raindrop from 4.25 to 5.25 s. Now level and pitch follow curves: the bike
+  swells in, peaks as it crosses the stall, and falls away; there is **no engine at all during the raindrop shot**;
+  it returns with the bike at 5.25 s. The tone is softer (fewer high harmonics) and has wet-tyre hiss mixed in.
+  The pass-by peak is about 7 dB lower than in v007.
+- **Rain** now fades in over 0.2 s, starting two frames before the cut, instead of switching on.
+- **Helmet shot:** the bell is gone. In its place: a soft airy swish that follows the glint across the visor
+  and a low double thump, like a heartbeat, under it.
+- Burst boom slightly lower so the limiter works less on the drop.
+- Picture unchanged from v007. Master and phone copy carry track A.
+Technical check: 384 frames, 16.000 s, -14.1 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v008.txt`).
+Still measured, not listened to, on this side.
