@@ -146,3 +146,21 @@ smoother; the bell on the helmet shot should be something else.
 - Picture unchanged from v007. Master and phone copy carry track A.
 Technical check: 384 frames, 16.000 s, -14.1 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v008.txt`).
 Still measured, not listened to, on this side.
+
+---
+## v009 addendum (14 Nov 2026) — sound only, no generation cost
+Owner notes on v008: the opening should read as boredom (and show a bored face); the sound should go
+boring room, then a bike revving that comes in smoothly, then the instrumental music.
+- **Room (0 - 1.4 s):** no music at all now. A wall clock (tick-tock every 0.5 s) and a slow ceiling fan over room
+  tone. The clock and fan come back in the last room shot, so the film ends where it began.
+- **The idea (from 1.4 s, the helmet shot):** the engine starts inside the room, muffled, with two rising revs,
+  while the clock and fan fade away. It runs straight into the pass-by on the road; no gap, no step.
+  The swish and heartbeat from v008 are gone; the engine is the idea.
+- **Music** enters with the rain at 2.58 s, filtered and opening up, drops out while the raindrop hangs, and hits
+  on the burst as before.
+- Level contour by quarter second, start to drop (dBFS before mastering): -41 in the room, -29 as the rev starts,
+  -24 at the rev peak, -23 on the road, -30 on the hanging drop, -15 on the burst.
+- Picture unchanged. **Open picture problem:** S01 still shows the man from behind, so no bored face is visible;
+  storyboard panels 01 and 02 (bored face beside the TV, then a glance at the helmet) need a new generated take.
+Technical check: 384 frames, 16.000 s, no decode errors (`technical_qc_v009.txt`). Engine and clock are still
+synthesised; a recorded-sounding rev would need a generated sound effect (1 credit quoted).

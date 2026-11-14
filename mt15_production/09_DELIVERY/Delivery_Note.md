@@ -28,3 +28,7 @@ are the same picture with the other three tracks, for choosing one. Rebuild: `py
 ## Latest: v008 (14 Nov 2026)
 Music track A (chosen by the owner), smoother engine and rain, new helmet sound. `MT15_master_v008.mp4`,
 `MT15_mobile_v008.mp4`. Rebuild: `./finish.sh FRAMES WORK v008 A`. Status: **review, not for publishing**.
+
+## Latest: v009 (14 Nov 2026)
+Sound only: bored room (clock, fan, no music), engine revs fade in on the helmet shot, music enters with the rain.
+`MT15_master_v009.mp4`, `MT15_mobile_v009.mp4`. Rebuild: `./finish.sh FRAMES WORK v009 A`. Status: **review**.

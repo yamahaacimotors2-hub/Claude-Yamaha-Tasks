@@ -89,19 +89,27 @@ cue(T["S04"], "rain bed in, starting two frames ahead of the cut", "AMBIENCE")
 cue(T["S11"], "hard cut back to room tone", "AMBIENCE")
 
 # ---- room beats
-for k in range(5):                                                       # the download that will not move
-    place(fx, tone(1320, 0.05, 0.012), 0.20 + k * 0.5, 0.05)
-cue(0.20, "UI tick, repeats every 0.5 s", "FOLEY")
+REV_T = T["S02"] + 0.15                                                   # he looks at the helmet: the bike starts in his head
+if TRACK:      # boredom: a wall clock and a slow ceiling fan. Both fade as the engine comes in, and return at the end.
+    in_room = np.clip(1 - (t - REV_T) / 0.9, 0, 1) * (t < T["S04"]) + env(T["S11"], T["S12"] + 0.3, 0.01, 0.4)
+    k = 0
+    while 0.12 + k * 0.5 < T["END"]:
+        tm = 0.12 + k * 0.5
+        f = 2150 if k % 2 == 0 else 1550                                 # tick, tock
+        tick = tone(f, 0.05, 0.007, (1.0, 0.35)) + 0.5 * click(0.05, 2500, 7000, 0.003)
+        place(fx, tick, tm, 0.11 * float(np.interp(tm, t[::480], in_room[::480])))
+        k += 1
+    fan = bandpass(rng.normal(0, 1, N), 140, 900) * (0.55 + 0.45 * np.sin(2 * np.pi * 2.6 * t))
+    amb += fan * 0.022 * in_room
+    cue(0.12, "boredom: wall clock tick-tock every 0.5 s, slow ceiling fan", "AMBIENCE")
+    cue(T["S11"], "back in the room: clock and fan again", "AMBIENCE")
+else:
+    for k in range(5):                                                   # the download that will not move
+        place(fx, tone(1320, 0.05, 0.012), 0.20 + k * 0.5, 0.05)
+    cue(0.20, "UI tick, repeats every 0.5 s", "FOLEY")
 glint_t = T["S02"] + 8 / FPS                                              # the glint crosses the visor, frames 8-16
-if TRACK:      # no bell: a soft airy swish that follows the glint, and a low double thump (a heartbeat) under it
-    ns = int(0.42 * SR)
-    swish = bandpass(rng.normal(0, 1, ns), 1400, 7000) * np.sin(np.pi * np.arange(ns) / ns) ** 2
-    place(fx, swish, glint_t - 0.04, 0.045)
-    th = np.arange(int(0.22 * SR)) / SR
-    thump = np.sin(2 * np.pi * (46 * th + 2.2 * (1 - np.exp(-th / 0.03)))) * np.exp(-th / 0.055)
-    place(fx, thump, glint_t + 0.13, 0.30)
-    place(fx, thump, glint_t + 0.30, 0.20)
-    cue(glint_t, "idea: airy swish with the glint, low heartbeat thump (no bell)", "FOLEY")
+if TRACK:
+    pass                                                                 # the idea is the engine (see vehicle)
 else:
     place(fx, tone(2637, 0.9, 0.22, (1.0, 0.4, 0.15)), T["S02"] + 12 / FPS, 0.10)
     cue(T["S02"] + 12 / FPS, "idea: glint ting on the visor", "FOLEY")
@@ -118,9 +126,12 @@ def curve(points):
 
 
 S4, S5, S6, S7, S8, S9, S10, S11 = (T[k] for k in ("S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11"))
-pitch = curve([(S4, 101), (S4 + 0.75, 104), (S5, 96),                     # passes the stall: pitch falls away
+pitch = curve([(REV_T, 62), (REV_T + 0.35, 62), (REV_T + 0.58, 116), (REV_T + 0.80, 76), (REV_T + 1.02, 130),
+               (S4, 101), (S4 + 0.75, 104), (S5, 96),                     # two revs, then it passes the stall
                (S6, 118), (S7, 124), (S8, 126), (S9, 132), (S10, 132), (S11, 150)])
-level = curve([(S4 - 0.10, 0), (S4 + 0.15, 0.035), (S4 + 0.75, 0.105), (S5 - 0.08, 0.05), (S5 + 0.06, 0),
+level = curve([(REV_T - 0.05, 0), (REV_T + 0.35, 0.03), (REV_T + 0.58, 0.062), (REV_T + 0.80, 0.045),
+               (REV_T + 1.02, 0.075), (S4 + 0.15, 0.065) if TRACK else (S4 + 0.15, 0.035),
+               (S4 + 0.75, 0.105), (S5 - 0.08, 0.05), (S5 + 0.06, 0),
                (S6 - 0.06, 0), (S6 + 0.12, 0.11), (S7 - 0.05, 0.10), (S7 + 0.08, 0.05),
                (S8 - 0.04, 0.05), (S8 + 0.12, 0.09), (S9 - 0.05, 0.09), (S9 + 0.10, 0.045),   # heard from the air
                (S10 - 0.05, 0.045), (S10 + 0.12, 0.11), (S11 - 0.006, 0.12), (S11, 0)])
@@ -128,7 +139,13 @@ phase = 2 * np.pi * np.cumsum(pitch) / SR
 voice = sum(np.sin(phase * k) / k ** 1.5 for k in range(1, 10))            # softer than a raw saw
 voice *= 0.65 + 0.35 * np.sin(phase * 0.5) ** 2                            # firing pulses
 tyres = bandpass(rng.normal(0, 1, N), 700, 5000)                           # tyres on a wet road
-veh += (bandpass(voice, 55, 1400) + 0.55 * tyres) * level * (1.0 if TRACK else 1.7)
+outside = np.clip((t - (S4 - 0.05)) / 0.12, 0, 1)                          # 0 in the room, 1 on the road
+if not TRACK:
+    level = level * (t >= S4 - 0.10)                                       # synth score: no rev in the room
+engine_snd = bandpass(voice, 55, 1400) * outside + bandpass(voice, 55, 420) * 1.5 * (1 - outside)   # muffled indoors
+veh += (engine_snd + 0.55 * tyres * outside) * level * (1.0 if TRACK else 1.7)
+if TRACK:
+    cue(REV_T, "the idea: engine starts in the room, muffled, two rising revs, runs into the pass-by", "VEHICLE")
 cue(S4, "engine and wet-tyre pass-by: swells, peaks as the bike crosses, falls away (synth)", "VEHICLE")
 cue(S5, "engine out for the whole raindrop shot", "VEHICLE")
 cue(S6, "engine back with the bike", "VEHICLE")
@@ -269,12 +286,11 @@ def generated_score(letter):
         shaped = (low * (1 - open_) * 2.0 + out * open_) * gain[:, None]
     else:
         shaped = out * (10 ** (6 / 20))                     # the track's own quiet build, lifted a little
-    shaped = shaped * (1 - 0.97 * hang)[:, None]
+    shaped = shaped * (1 - 0.97 * hang)[:, None] * np.clip((t - (T["S04"] - 0.05)) / 0.45, 0, 1)[:, None]
     out = np.where(pre[:, None], shaped, out)
     out *= np.clip((DROP_T - PRE - t) / 0.004, 0, 1)[:, None] * pre[:, None] + (~pre)[:, None]
     place(fx, boom, T["S12"], 0.40)
-    cue(0.0, f"music track {letter}: held low and muffled in the room", "MUSIC")
-    cue(T["S04"], "music opens up in the rain", "MUSIC")
+    cue(T["S04"], f"music track {letter} enters with the rain, filtered, opening up (no music in the room)", "MUSIC")
     cue(T["S05"], "music out: time stops on the drop", "MUSIC")
     cue(DROP_T, "the drop: full track from here, one beat every 12 frames", "MUSIC")
     cue(OUT_T, "hard cut to the room: music stops dead", "MUSIC")
