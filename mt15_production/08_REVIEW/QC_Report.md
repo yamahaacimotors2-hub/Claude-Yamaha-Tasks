@@ -66,3 +66,12 @@ Eight of the twelve shots are now photoreal:
 Technical check repeated: 384 frames, 16.000 s, -14.2 LUFS, no decode errors (`technical_qc_v003.txt`).
 Known: S01 and S11 are stills with camera moves, so the man does not move; S04 and S10 were judged from six
 sampled frames each, not in motion.
+
+---
+## v004 addendum (14 Nov 2026)
+- **S08** is now the Seedance restyle of the CG hero shot: photoreal dusk sky, wet road, cyan wheel and gold fork,
+  rail lamps that light up with reflections on the road. Stones still look like plain white blocks. Cadence changed
+  from one stone per 3 frames to about one per 7; the clip is sped up 7/6 and the stone sounds moved to eighth notes.
+- **S09** restyle did not work: the aerial is still visibly low-poly. It is the weakest shot in the film now.
+- **Still CG:** S03 (visor), S05 (raindrop burst).
+Technical check repeated: 384 frames, 16.000 s, -14.2 LUFS, no decode errors (`technical_qc_v004.txt`).

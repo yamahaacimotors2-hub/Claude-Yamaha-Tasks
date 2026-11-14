@@ -10,7 +10,7 @@ frame,seconds,track,cue
 108,4.500,VFX,burst: whoosh and a bright chord
 153,6.375,FOLEY,drop hits the puddle
 164,6.833,MUSIC,"pulse, arpeggio and pad enter at 120 BPM"
-173,7.208,FOLEY,kerb stones seat: one every 1/8 s (sixteenths at 120 BPM)
+173,7.208,FOLEY,"kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after"
 173,7.208,FOLEY,"rail posts land on the eighths, metal tick"
 190,7.918,FOLEY,rail lamps light: soft chime on the half beats
 272,11.333,MUSIC,"widest chord, arpeggio up an octave"

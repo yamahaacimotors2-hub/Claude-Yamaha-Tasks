@@ -137,13 +137,15 @@ k = 0
 while BEAT0 + k * 0.125 < T["S11"]:
     tm = BEAT0 + k * 0.125
     near = 1.0 if tm < T["S09"] else (0.45 if tm < T["S10"] else 0.7)   # close, from the air, chase
-    place(fx, stone * (0.9 + 0.2 * rng.random()), tm, 0.16 * near)
-    if k % 2 == 0:
+    hero = tm < T["S09"]            # in the restyled hero shot a stone lands every eighth note, not every sixteenth
+    if not hero or k % 2 == 0:
+        place(fx, stone * (0.9 + 0.2 * rng.random()), tm, (0.20 if hero else 0.16) * near)
+    if k % (4 if hero else 2) == 0:
         place(fx, post, tm + 0.004, 0.07 * near)
     if k % 4 == 2:
         place(fx, lamp, tm + 0.46, 0.035 * near)
     k += 1
-cue(BEAT0, "kerb stones seat: one every 1/8 s (sixteenths at 120 BPM)", "FOLEY")
+cue(BEAT0, "kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after", "FOLEY")
 cue(BEAT0, "rail posts land on the eighths, metal tick", "FOLEY")
 cue(BEAT0 + 0.71, "rail lamps light: soft chime on the half beats", "FOLEY")
 

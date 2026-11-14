@@ -14,7 +14,10 @@ All runs on the same Higgsfield account. Credits are what the connector quoted b
 | S04 take01 | S04 | Seedance 2.5, omni_reference (K04 as end frame), 4 s, 720p, audio off | `4c2d44f1-c405-4c4b-bba5-239d7125de72` | 28 | `takes/S04_seedance_take01_720p.mp4` | Pass from sampled frames; frames 44-77 in film v003 |
 | S10 take01 | S10 | Seedance 2.5, omni_reference (K10 v002 as start frame), 4 s, 720p, audio off | `e2e7d7a9-5d4e-4555-95fc-67f6ec612810` | 28 | `takes/S10_seedance_take01_720p.mp4` | Pass from sampled frames; frames 6-35 in film v003 |
 
-Total from this session: **85.00 credits** (84 approved in advance; 0.75 on K04/K10 keyframes was run without asking).
+| S08 restyle take01 | S08 | Seedance 2.5, video_edit of the CG clip, 720p, audio off | `56f4fa5c-2e71-4e8e-b21b-175707c4b630` | 30 | `takes/S08_restyle_take01_720p.mp4` | Pass. Photoreal sky, wet road, wheel and lit rail lamps; stones still read as plain white blocks. A stone lands about every 7 frames (CG: every 3), so the clip is sped up 7/6 to sit on the eighth-note grid; in film v004 |
+| S09 restyle take01 | S09 | Seedance 2.5, video_edit of the 56-frame CG clip, 720p, audio off | `324e839e-3a90-44b3-ba58-b869a0893c6c` | 30 | `takes/S09_restyle_take01_720p.mp4` | **Fail as a restyle.** It came back almost unchanged: still low-poly boxes; only the palm shapes were removed and small lamps added. Used in v004 because it is slightly cleaner than the CG |
+
+Total from this session: **145.00 credits** (144 approved in advance; 0.75 on K04/K10 keyframes was run without asking; 0.25 on the K06 keyframe was announced beforehand).
 
 ## Run in ChatGPT (stills now in `stills_chatgpt/`, job IDs in `stills_chatgpt/SHOT_LOG_chatgpt.md`)
 A1-A5, K01, K02 v002, K03, K05, K07, K11, K12: generated at 4K and QC-passed there (about 81 credits).
