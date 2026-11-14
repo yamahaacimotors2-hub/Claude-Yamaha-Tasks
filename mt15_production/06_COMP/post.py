@@ -128,7 +128,7 @@ def end_card(frames_dir, n, rng):
     ImageDraw.Draw(shadow).ellipse((60, 40, bw + 140, 110), fill=215)
     shadow = np.asarray(shadow.filter(ImageFilter.GaussianBlur(22)), dtype=np.float32) / 255.0
     shadow = np.dstack([np.zeros((*shadow.shape, 3), np.float32), shadow])
-    tag, model, logo = rgba(os.path.join(TEX, "tagline.png"), 980), rgba(os.path.join(TEX, "model_line.png"), 900), \
+    tag, model, logo = rgba(os.path.join(TEX, "tagline.png"), 880), rgba(os.path.join(TEX, "model_line.png"), 900), \
         rgba(os.path.join(TEX, "logo_placeholder.png"), 400)
     out = []
     for i in range(n):

@@ -10,8 +10,13 @@ python3 07_EDIT_SOUND/audio.py "$WK/mix.wav" 07_EDIT_SOUND/Sound_Cue_Sheet.csv
 M=09_DELIVERY/MT15_master_${V}.mp4
 ffmpeg -loglevel error -y -framerate 24 -i "$WK/final/%04d.png" -i "$WK/mix.wav" \
   -af "loudnorm=I=-14:TP=-1.5:LRA=11" -ar 48000 \
-  -c:v libx264 -preset slow -crf 15 -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+  -c:v libx264 -preset slow -crf 17 -maxrate 20M -bufsize 40M -pix_fmt yuv420p \
+  -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
   -c:a aac -b:a 256k -frames:v 384 -movflags +faststart "$M"
+# mobile review / publish copy (SOP step 96): 1080x1920 H.264/AAC, 24 fps, Rec.709 SDR
+ffmpeg -loglevel error -y -i "$M" -c:v libx264 -preset slow -crf 22 -maxrate 8M -bufsize 16M -pix_fmt yuv420p \
+  -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:a aac -b:a 192k -movflags +faststart \
+  09_DELIVERY/MT15_mobile_${V}.mp4
 # review copy: shot ID and frame number burned in (SOP step 20)
 DT=""; i=0
 for row in "S01 0 30" "S02 30 50" "S03 50 62" "S04 62 96" "S05 96 126" "S06 126 150" "S07 150 164" \
