@@ -93,15 +93,15 @@ REV_T = T["S02"] + 0.15                                                   # he l
 if TRACK:      # boredom: a wall clock and a slow ceiling fan. Both fade as the engine comes in, and return at the end.
     in_room = np.clip(1 - (t - REV_T) / 0.9, 0, 1) * (t < T["S04"]) + env(T["S11"], T["S12"] + 0.3, 0.01, 0.4)
     k = 0
-    while 0.12 + k * 0.5 < T["END"]:
-        tm = 0.12 + k * 0.5
+    while 0.25 + k * 0.5 < T["END"]:
+        tm = 0.25 + k * 0.5                                              # on the music's beat grid
         f = 2150 if k % 2 == 0 else 1550                                 # tick, tock
         tick = tone(f, 0.05, 0.007, (1.0, 0.35)) + 0.5 * click(0.05, 2500, 7000, 0.003)
         place(fx, tick, tm, 0.11 * float(np.interp(tm, t[::480], in_room[::480])))
         k += 1
     fan = bandpass(rng.normal(0, 1, N), 140, 900) * (0.55 + 0.45 * np.sin(2 * np.pi * 2.6 * t))
     amb += fan * 0.022 * in_room
-    cue(0.12, "boredom: wall clock tick-tock every 0.5 s, slow ceiling fan", "AMBIENCE")
+    cue(0.25, "boredom: wall clock tick-tock every 0.5 s (on the beat grid), slow ceiling fan", "AMBIENCE")
     cue(T["S11"], "back in the room: clock and fan again", "AMBIENCE")
 else:
     for k in range(5):                                                   # the download that will not move
@@ -306,8 +306,33 @@ def generated_score(letter):
     shaped = shaped * (1 - 0.97 * hang)[:, None] * np.clip((t - (T["S04"] - 0.05)) / 0.45, 0, 1)[:, None]
     out = np.where(pre[:, None], shaped, out)
     out *= np.clip((DROP_T - PRE - t) / 0.004, 0, 1)[:, None] * pre[:, None] + (~pre)[:, None]
+    # Tension bed for the room: a little of the track's own harmony, smeared into a dark drone (so it is in key
+    # with what follows), pulsing softly on the beat and swelling toward the cut. Very low in the mix.
+    def smear(x, out_len, win=int(0.19 * SR)):
+        w, hop, r = np.hanning(win), win // 4, np.random.default_rng(7)
+        y = np.zeros(out_len + win)
+        steps = out_len // hop
+        for k in range(steps):
+            pos = int(k / (steps - 1) * (len(x) - win))
+            X = np.abs(np.fft.rfft(x[pos:pos + win] * w))
+            y[k * hop:k * hop + win] += np.fft.irfft(X * np.exp(1j * r.uniform(0, 2 * np.pi, len(X))), win) * w
+        return y[:out_len]
+
+    m0 = int((a["drop"] - DROP_T) * SR)
+    n_bed = int((T["S04"] + 0.5) * SR)
+    bed = np.zeros((N, 2))
+    for c in (0, 1):
+        d = bandpass(smear(src[m0:m0 + int(1.2 * SR), c], n_bed), 70, 900)
+        bed[:n_bed, c] = d / np.sqrt((d ** 2).mean())
+    since_beat = np.mod(t - 0.25, 0.5)
+    pulse = 0.50 + 0.50 * np.exp(-since_beat / 0.16) * np.clip(since_beat / 0.012, 0, 1)
+    swell = np.clip(t / 0.35, 0, 1) * (0.75 + 0.45 * np.clip(t / T["S04"], 0, 1))
+    leave = np.clip((T["S04"] + 0.40 - t) / 0.45, 0, 1)                   # hands over to the music in the rain
+    out += bed * (0.020 * pulse * swell * leave)[:, None]
     place(fx, boom, T["S12"], 0.40)
-    cue(T["S04"], f"music track {letter} enters with the rain, filtered, opening up (no music in the room)", "MUSIC")
+    cue(0.0, "tension bed, very low: dark drone made from the track's own harmony, soft pulse on the beat, slow swell",
+        "MUSIC")
+    cue(T["S04"], f"music track {letter} enters with the rain, filtered, opening up; the tension bed hands over to it", "MUSIC")
     cue(T["S05"], "music out: time stops on the drop", "MUSIC")
     cue(DROP_T, "the drop: full track from here, one beat every 12 frames", "MUSIC")
     cue(OUT_T, "hard cut to the room: music stops dead", "MUSIC")

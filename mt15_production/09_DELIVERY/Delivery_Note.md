@@ -37,3 +37,7 @@ Sound only: bored room (clock, fan, no music), engine revs fade in on the helmet
 New opening (bored face, glance at the helmet) and a generated engine rev. `MT15_master_v010.mp4`, `MT15_mobile_v010.mp4`.
 Rebuild: `python3 06_COMP/takes.py FRAMES`, `python3 06_COMP/stills.py --screen FRAMES tv_3_named.png S01 S02`,
 `./finish.sh FRAMES WORK v010 A`. Status: **review, not for publishing**.
+
+## Latest: v011 (14 Nov 2026)
+Sound only: a very low tension bed under the opening room. `MT15_master_v011.mp4`, `MT15_mobile_v011.mp4`.
+Rebuild: `./finish.sh FRAMES WORK v011 A`. Status: **review, not for publishing**.

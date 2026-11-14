@@ -180,3 +180,17 @@ synthesised; a recorded-sounding rev would need a generated sound effect (1 cred
   S11 (last room shot) is still the old still seen from behind, with the helmet on.
 Technical check: 384 frames, 16.000 s, -14.1 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v010.txt`).
 Sound still measured only, not listened to, on this side.
+
+---
+## v011 addendum (14 Nov 2026) — sound only, no generation cost
+Owner note on v010: the opening needs a tension background music, playing very low.
+- **Tension bed under the room (0 - 2.6 s).** It is made from track A itself: 1.2 s of the track smeared into a
+  dark drone (70 - 900 Hz), so it is in key with the music that follows. It pulses softly on the beat (every
+  0.5 s, with the clock), swells slowly toward the cut, and hands over to the track as the rain starts.
+- Level: about 22 dB below the ride music; the room as a whole rises from about -37 to -32 dBFS before the
+  engine comes in (it was -41 with clock and fan only).
+- The wall clock now ticks on the same beat grid as the music.
+- Picture unchanged from v010.
+Technical check: 384 frames, 16.000 s, no decode errors (`technical_qc_v011.txt`). Measured, not listened to.
+If the bed does not read as tension by ear, the alternative is a short generated suspense cue (2.33 credits
+for one, 9.32 for four variations), which needs the owner's approval.
