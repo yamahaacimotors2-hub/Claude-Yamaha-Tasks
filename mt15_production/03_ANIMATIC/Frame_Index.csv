@@ -7,7 +7,6 @@ S05,96,126,30,1.25,05+06,Hanging drop; beam enters; amber-magenta burst,Blender 
 S06,126,150,24,1.00,07,Low front 3/4 bike with colour spray,Blender CG proxy bike,Higgsfield with official PNG = PRODUCT TEST
 S07,150,164,14,0.58,09,Puddle ripple,Blender CG,Higgsfield macro or keep CG
 S08,164,236,72,3.00,10+11,Hero build beside the front wheel,Blender CG,Blender CG (final at 1080x1920 on a GPU)
-S09,236,272,36,1.50,12,Aerial: built behind; grey ahead,Blender CG,Blender CG
-S10,272,302,30,1.25,13,Rear chase; the city opens,Blender CG proxy bike,Blender CG or Higgsfield if a rear product photo exists
+S10,236,302,66,2.75,13,Rear chase; the city opens (takes the aerial's time in v005),Seedance 2.5 take,Seedance 2.5 take at 1080p
 S11,302,342,40,1.67,14,Same room; helmet still on; 4%,Blender CG,Higgsfield from the S01 still
 S12,342,384,42,1.75,15+16,End card: official bike photo; tagline; logo,Python comp,Photoshop/After Effects with official logo

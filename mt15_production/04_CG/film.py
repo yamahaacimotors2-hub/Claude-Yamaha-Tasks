@@ -678,6 +678,7 @@ def build_drop(M, sh):
             q = i / (beads - 1)
             r = r0 * (1 - q) ** 0.45 + 0.002
             bead = ell((0, 0, 0), (r, r, r), M["liquid"], seg=12)
+            bead["burst"] = 1
             mixc = min(1.0, max(0.0, (q - 0.25) / 0.5))
             col = (1.0, 0.30 * (1 - mixc) + 0.02 * mixc, 0.02 * (1 - mixc) + 0.45 * mixc)
             for f in range(BURST - 1, n + 1):
@@ -774,6 +775,8 @@ def main():
     ap.add_argument("--tv", default="named", choices=("named", "clean"))
     ap.add_argument("--blend", default="")
     ap.add_argument("--n", type=int, default=0, help="override the shot length in frames (for handles)")
+    ap.add_argument("--burst-only", action="store_true",
+                    help="S05: render only the colour burst on a transparent background, for comping over a still")
     a = ap.parse_args(argv)
 
     if a.n:
@@ -816,6 +819,13 @@ def main():
         sc.view_settings.view_transform = "Standard"      # keeps the amber and magenta saturated
     if kind == "road" and sh["sky"] == "rain":
         sc.view_settings.exposure = 0.75
+    if a.burst_only:
+        for ob in sc.objects:
+            if ob.type in ("MESH", "LIGHT") and not ob.get("burst"):
+                ob.hide_render = True
+        sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.0
+        r.film_transparent = True
+        r.image_settings.color_mode = "RGBA"
     if a.blend:
         bpy.ops.wm.save_as_mainfile(filepath=a.blend)
     frames = []

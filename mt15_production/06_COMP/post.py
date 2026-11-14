@@ -22,7 +22,9 @@ W, H = 1080, 1920
 # shot, frames, look
 EDIT = [("S01", 30, "room"), ("S02", 20, "room"), ("S03", 12, "room"), ("S04", 34, "rain"),
         ("S05", 30, "macro"), ("S06", 24, "rain"), ("S07", 14, "macro"), ("S08", 72, "dusk"),
-        ("S09", 36, "dusk"), ("S10", 30, "dusk"), ("S11", 40, "room"), ("S12", 42, "card")]
+        ("S10", 66, "dusk"), ("S11", 40, "room"), ("S12", 42, "card")]
+# v005: the aerial (S09) is out of the cut and the chase (S10) runs 66 frames in its place.
+# To put the aerial back: ("S09", 36, "dusk"), ("S10", 30, "dusk").
 assert sum(n for _, n, _ in EDIT) == 384
 
 LOOKS = {   # gain per channel, contrast, saturation
@@ -163,7 +165,7 @@ def main():
     frames_dir, out_dir = sys.argv[1], sys.argv[2]
     os.makedirs(out_dir, exist_ok=True)
     rng = np.random.default_rng(1)
-    rain = Rain(720, 1280)
+    rains = {}
     g = 0
     for shot, n, look in EDIT:
         if shot == "S12":
@@ -179,7 +181,10 @@ def main():
             if shot == "S05":                                      # time is frozen until the burst
                 amount = float(np.clip((f - 20) / 8, 0, 1)) * 0.8
             if amount:
-                streaks = rain.frame(g, amount)
+                size = a.shape[:2]                  # CG shots are 720x1280, still-based shots 1080x1920
+                if size not in rains:
+                    rains[size] = Rain(size[1], size[0])
+                streaks = rains[size].frame(g, amount)
                 if shot == "S04":       # the camera stands under the stall roof: rain only out on the road
                     yy = np.linspace(0, 1, streaks.shape[0], dtype=np.float32)[:, None, None]
                     streaks = streaks * np.clip((yy - 0.20) / 0.06, 0, 1) * np.clip((0.60 - yy) / 0.06, 0, 1)

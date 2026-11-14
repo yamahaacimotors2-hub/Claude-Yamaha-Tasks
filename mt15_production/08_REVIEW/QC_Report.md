@@ -75,3 +75,15 @@ sampled frames each, not in motion.
 - **S09** restyle did not work: the aerial is still visibly low-poly. It is the weakest shot in the film now.
 - **Still CG:** S03 (visor), S05 (raindrop burst).
 Technical check repeated: 384 frames, 16.000 s, -14.2 LUFS, no decode errors (`technical_qc_v004.txt`).
+
+---
+## v005 addendum (14 Nov 2026) — no generation cost
+- **S03** is now the approved K03 still (helmet on, hand at the chin strap) with a small snap on the click frame.
+  The man does not move; the sound is a buckle click.
+- **S05** is the approved K05 still with the beam arriving as a 2D light and the CG colour burst laid over it.
+  The drop is photoreal; the burst still reads as strings of glowing beads, not liquid.
+- **S09 (aerial) is out of the cut.** Its restyle failed and it was the only visibly low-poly shot left.
+  The chase (S10) now runs 66 frames (2.75 s) in its place. To restore the aerial, see the note in `06_COMP/post.py`.
+- Result: every shot in the film is photoreal or built from a photoreal still. Eleven shots, 384 frames.
+Technical check repeated: 384 frames, 16.000 s, -13.9 LUFS, no decode errors (`technical_qc_v005.txt`).
+Lost with the aerial: the single frame that showed "built behind, building at the bike, grey ahead" all at once.

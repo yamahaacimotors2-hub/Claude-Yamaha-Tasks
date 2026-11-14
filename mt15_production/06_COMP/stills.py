@@ -7,6 +7,8 @@ Usage:  python3 stills.py STILLS_DIR FRAMES_DIR
 
 S01 / S11: the download screen is corner-pinned onto the blank TV, with a slow push-in.
 S02: slow push on the helmet with a glint crossing the visor (the idea landing).
+S03: the helmet-on still with a small snap on the buckle click.
+S05: the hanging-drop still with the CG colour burst (FRAMES_DIR/S05_burst, from film.py --burst-only) laid over it.
 S07: the puddle still, with ripples made to travel outward by a radial warp.
 """
 import glob
@@ -147,11 +149,56 @@ def puddle(stills_dir, n):
     return out
 
 
+def buckle(stills_dir, n):
+    """S03: the helmet is on, hand at the chin strap. A slow push, then a small snap on the click frame."""
+    plate = find(stills_dir, "K03")
+    out = []
+    for i in range(n):
+        z = 1.0 + 0.03 * i / 6 if i < 6 else (1.075 if i == 6 else 1.06 + 0.004 * (i - 7))
+        dy = 0.004 if i == 6 else 0.0                     # the click: one frame of snap and settle
+        out.append(push(plate, 1.0, z, 0.52, 0.60 + dy))
+    return out
+
+
+def drop(stills_dir, frames_dir, n):
+    """S05: the photoreal hanging drop; the beam reaches it and the CG colour burst is laid over it."""
+    plate = find(stills_dir, "K05").resize((W, H), Image.LANCZOS)
+    a = np.asarray(plate, dtype=np.float32) / 255.0
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    cx, cy = 0.175 * W, 0.515 * H                         # centre of the drop's bulb in the still
+    halo = np.exp(-(((xx - cx) / (0.20 * W)) ** 2 + ((yy - cy) / (0.13 * H)) ** 2))[..., None]
+    sweep = np.clip(1.2 - np.abs(xx - cx) / (0.55 * W), 0, 1)[..., None] * \
+        np.exp(-((yy - cy) / (0.20 * H)) ** 2)[..., None]
+    out = []
+    for i in range(n):
+        f = i + 1
+        beam = float(np.clip((f - 5) / 7, 0, 1))          # the headlight arrives over frames 5-12
+        flash = float(np.exp(-((f - 13) / 1.6) ** 2))     # and the drop flares as it bursts
+        frame = a + (halo * (0.30 * beam + 0.75 * flash) + sweep * 0.10 * beam) * np.array((0.86, 0.93, 1.0),
+                                                                                         dtype=np.float32)
+        src = os.path.join(frames_dir, "S05_burst", f"f{f:04d}.png")
+        if f >= 12 and os.path.exists(src):
+            b = Image.open(src).convert("RGBA").resize((W, H), Image.LANCZOS)
+            layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            layer.paste(b, (-15, 30))                     # lines the CG burst origin up with the still's drop
+            la = np.asarray(layer, dtype=np.float32) / 255.0
+            rgb, al = la[..., :3], la[..., 3:4]
+            rgb = np.clip(rgb ** 1.7 * np.array((1.0, 0.78, 0.92), dtype=np.float32), 0, 1)   # amber, not white-hot
+            glow = np.asarray(Image.fromarray((np.clip(rgb * al, 0, 1) * 255).astype(np.uint8)).filter(
+                ImageFilter.GaussianBlur(26)), dtype=np.float32) / 255.0
+            frame = frame * (1 - al * 0.88) + rgb * al * 0.88 + glow * 0.30
+        im = Image.fromarray((np.clip(frame, 0, 1) * 255).astype(np.uint8))
+        out.append(push(im, i / (n - 1), 1.06, 0.30, 0.52))
+    return out
+
+
 def main():
     stills_dir, frames_dir = sys.argv[1], sys.argv[2]
     only = sys.argv[3:]                                  # optional: shot IDs to rebuild
     jobs = {"S01": lambda: room(stills_dir, "K01", "tv_3_named.png", 30, 1.07),
             "S02": lambda: helmet(stills_dir, 20),
+            "S03": lambda: buckle(stills_dir, 12),
+            "S05": lambda: drop(stills_dir, frames_dir, 30),
             "S07": lambda: puddle(stills_dir, 14),
             "S11": lambda: room(stills_dir, "K11", "tv_4_named.png", 40, 1.05, pulse_at=13)}
     for shot, make in jobs.items():
