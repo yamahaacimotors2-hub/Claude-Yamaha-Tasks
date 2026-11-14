@@ -175,7 +175,11 @@ def main():
             if shot == "S05":                                      # time is frozen until the burst
                 amount = float(np.clip((f - 20) / 8, 0, 1)) * 0.8
             if amount:
-                a = a + rain.frame(g, amount) * np.array((0.80, 0.88, 1.0), dtype=np.float32)
+                streaks = rain.frame(g, amount)
+                if shot == "S04":       # the camera stands under the stall roof: rain only out on the road
+                    yy = np.linspace(0, 1, streaks.shape[0], dtype=np.float32)[:, None, None]
+                    streaks = streaks * np.clip((yy - 0.20) / 0.06, 0, 1) * np.clip((0.60 - yy) / 0.06, 0, 1)
+                a = a + streaks * np.array((0.80, 0.88, 1.0), dtype=np.float32)
             a = finish(a, rng)
             Image.fromarray((upscale(a) * 255).astype(np.uint8)).save(os.path.join(out_dir, f"{g:04d}.png"))
             g += 1

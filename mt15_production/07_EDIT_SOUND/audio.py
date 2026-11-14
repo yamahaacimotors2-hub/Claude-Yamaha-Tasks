@@ -88,7 +88,7 @@ cue(0.20, "UI tick, repeats every 0.5 s", "FOLEY")
 place(fx, reverb_small := tone(2637, 0.9, 0.22, (1.0, 0.4, 0.15)), T["S02"] + 12 / FPS, 0.10)
 cue(T["S02"] + 12 / FPS, "idea: glint ting on the visor", "FOLEY")
 snap = click(0.05, 1500, 9000, 0.006) * 0.9 + np.pad(tone(140, 0.05, 0.02), (0, 0))[: int(0.05 * SR)] * 0.8
-place(fx, snap, T["S03"] + 7 / FPS, 0.55)
+place(fx, snap, T["S03"] + 7 / FPS, 0.34)
 cue(T["S03"] + 7 / FPS, "visor snaps shut", "FOLEY")
 
 # ---- vehicle: a synthesised single-cylinder note, never a recording
@@ -181,13 +181,13 @@ cue(T["S10"], "widest chord, arpeggio up an octave", "MUSIC")
 cue(T["S11"], "clean stop on the hard cut", "MUSIC")
 
 # ---- 4% and the end card
-place(fx, tone(880, 0.08, 0.03), T["S11"] + 0.55, 0.07)
-place(fx, tone(1174.66, 0.14, 0.05), T["S11"] + 0.66, 0.07)
+place(fx, tone(880, 0.08, 0.03), T["S11"] + 0.55, 0.16)
+place(fx, tone(1174.66, 0.14, 0.05), T["S11"] + 0.66, 0.16)
 cue(T["S11"] + 0.55, "TV blip: 4%", "FOLEY")
-sting = pad((146.83, 220.0, 293.66, 369.99, 440.0), T["S12"], T["END"] + 1, 0.085)   # D major: resolved
+sting = pad((146.83, 220.0, 293.66, 369.99, 440.0), T["S12"], T["END"] + 1, 0.13)   # D major: resolved
 sub = tone(55, 1.5, 0.5) * 0.9
 mus += sting
-place(mus, sub, T["S12"], 0.20)
+place(mus, sub, T["S12"], 0.30)
 place(fx, tone(1174.66, 1.2, 0.4, (1.0, 0.3)), T["S12"] + 0.25, 0.05)
 cue(T["S12"], "end sting: D major pad and sub", "MUSIC")
 
