@@ -11,9 +11,12 @@ All runs on the same Higgsfield account. Credits are what the connector quoted b
 | K10 v001 | S10 | GPT Image 2.6, 9:16, default quality | `b4885e3b-c903-4da0-8df7-1d6b73414fac` | 0.25 | `keyframes/K10_S10_keyframe_v001.png` | Tail lamp was a wide strip: superseded |
 | K10 v002 | S10 | GPT Image 2.6 edit of v001 with rear references | `a40d8b4b-86b7-4289-ba46-57f3ca974b03` | 0.25 | `keyframes/K10_S10_keyframe_v002.png` | Pass for previs; rear matches the India-market photos, Bangladesh rear fitment unverified |
 
-Total from this session: **29.00 credits**.
+| S04 take01 | S04 | Seedance 2.5, omni_reference (K04 as end frame), 4 s, 720p, audio off | `4c2d44f1-c405-4c4b-bba5-239d7125de72` | 28 | `takes/S04_seedance_take01_720p.mp4` | Pass from sampled frames; frames 44-77 in film v003 |
+| S10 take01 | S10 | Seedance 2.5, omni_reference (K10 v002 as start frame), 4 s, 720p, audio off | `e2e7d7a9-5d4e-4555-95fc-67f6ec612810` | 28 | `takes/S10_seedance_take01_720p.mp4` | Pass from sampled frames; frames 6-35 in film v003 |
 
-## Run in ChatGPT (reported by Niloy, files not yet in this repo)
+Total from this session: **85.00 credits** (84 approved in advance; 0.75 on K04/K10 keyframes was run without asking).
+
+## Run in ChatGPT (stills now in `stills_chatgpt/`, job IDs in `stills_chatgpt/SHOT_LOG_chatgpt.md`)
 A1-A5, K01, K02 v002, K03, K05, K07, K11, K12: generated at 4K and QC-passed there (about 81 credits).
 K06 v005/v006 and K04 v001/v002 were also made there; K04 failed its rotor check. The K04 and K10 above replace them.
 

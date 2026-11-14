@@ -54,3 +54,15 @@ film has a moving, product-accurate MT-15 in one shot. Same length, same sound. 
 384 frames, 16.000 s, -14.2 LUFS, no decode errors (`technical_qc_v002.txt`).
 New continuity note: the generated road in S06 already has a waterside railing and street lamps, while the
 CG shots around it show that side unfinished.
+
+---
+## v003 addendum (14 Nov 2026)
+Eight of the twelve shots are now photoreal:
+- **S01, S02, S07, S11** are built from the approved 4K stills with `06_COMP/stills.py` (TV screen corner-pinned,
+  slow push-ins, glint on the helmet, travelling ripples on the puddle). No generation cost.
+- **S04, S06, S10** are Seedance 2.5 takes. **S12** uses the generated waterfront plate behind the official bike photo.
+- **Still CG:** S03 (visor), S05 (raindrop burst), S08 (hero build), S09 (aerial). They no longer match the look of
+  the shots around them; this is now the main visible problem.
+Technical check repeated: 384 frames, 16.000 s, -14.2 LUFS, no decode errors (`technical_qc_v003.txt`).
+Known: S01 and S11 are stills with camera moves, so the man does not move; S04 and S10 were judged from six
+sampled frames each, not in motion.

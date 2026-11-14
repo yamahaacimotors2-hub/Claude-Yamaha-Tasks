@@ -111,7 +111,9 @@ def rgba(path, width=None):
 
 def end_card(frames_dir, n, rng):
     """S12: the official product photo on the CG waterfront. The bike pixels are not regenerated."""
-    bg0 = Image.open(os.path.join(frames_dir, "BG12", "f0001.png")).convert("RGB")
+    k12 = os.path.join(ROOT, "05_GENERATIONS", "stills_chatgpt", "K12_S12_background_v001.jpg")
+    photoreal = os.path.exists(k12)                 # generated waterfront plate; else the CG background
+    bg0 = Image.open(k12 if photoreal else os.path.join(frames_dir, "BG12", "f0001.png")).convert("RGB")
     bike = rgba(PRODUCT, 960)
     a = Image.open(PRODUCT).convert("RGBA").split()[-1].getbbox()          # trim to the bike itself
     k = 960 / Image.open(PRODUCT).width
@@ -139,10 +141,10 @@ def end_card(frames_dir, n, rng):
         bg = bg0.resize((W, H), Image.LANCZOS, box=((W - cw) / 2, (H - ch) * 0.55, (W + cw) / 2,
                                                     (H - ch) * 0.55 + ch))
         a = np.asarray(bg, dtype=np.float32) / 255.0
-        a = grade(a, "dusk")
+        a = grade(a, "plate" if photoreal else "dusk")
         a = np.asarray(Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8)).filter(
             ImageFilter.GaussianBlur(2.2)), dtype=np.float32) / 255.0   # background a touch soft: bike is the subject
-        a = a * 0.86
+        a = a * (0.80 if photoreal else 0.86)
         x = (W - bw) // 2 + round(18 * (1 - u))                    # the bike settles into place
         y = 1470 - bh
         over(a, shadow, x - 100, y + bh - 82)
