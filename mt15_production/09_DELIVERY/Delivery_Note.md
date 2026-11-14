@@ -19,3 +19,8 @@ Rebuild from source: `04_CG/render_all.sh FRAMES` then `./finish.sh FRAMES WORK 
 new Seedance takes. Changes per version: `../08_REVIEW/QC_Report.md`. Status is still **review, not for publishing**.
 Rebuild: `python3 06_COMP/stills.py STILLS FRAMES S01 S02 S07 S11`, `python3 06_COMP/takes.py FRAMES`,
 then `./finish.sh FRAMES WORK v006` (S06 and S08 frames come from their takes as noted in `05_GENERATIONS/Generation_Log.md`).
+
+## Latest: v007 (14 Nov 2026)
+Cut to music. `MT15_master_v007.mp4` and `MT15_mobile_v007.mp4` carry music track D; `MT15_mobile_v007_musicA/B/C.mp4`
+are the same picture with the other three tracks, for choosing one. Rebuild: `python3 06_COMP/takes.py FRAMES`,
+`./finish.sh FRAMES WORK v007 D`, then `07_EDIT_SOUND/variants.sh WORK v007`. Status: **review, not for publishing**.

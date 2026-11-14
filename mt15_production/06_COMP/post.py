@@ -21,9 +21,10 @@ W, H = 1080, 1920
 
 # shot, frames, look
 EDIT = [("S01", 30, "room"), ("S02", 20, "room"), ("S03", 12, "room"), ("S04", 28, "rain"),
-        ("S05", 36, "macro"), ("S06", 24, "rain"), ("S07", 14, "macro"), ("S08", 72, "dusk"),
-        ("S09", 36, "dusk"), ("S10", 30, "dusk"), ("S11", 40, "room"), ("S12", 42, "card")]
-# v006: the raindrop (S05) runs 36 frames, taken from the stall shot (S04, now 28); the aerial (S09) is back.
+        ("S05", 36, "macro"), ("S06", 24, "rain"), ("S07", 12, "macro"), ("S08", 72, "dusk"),
+        ("S09", 36, "dusk"), ("S10", 36, "dusk"), ("S11", 36, "room"), ("S12", 42, "card")]
+# v007: cut to the music. The beat grid is anchored on the raindrop burst (frame 102) with a beat every
+# 12 frames; S06 (126), S07 (150), S08 (162), S09 (234), S10 (270), S11 (306) and S12 (342) start on a beat.
 assert sum(n for _, n, _ in EDIT) == 384
 
 LOOKS = {   # gain per channel, contrast, saturation

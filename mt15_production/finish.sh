@@ -1,15 +1,20 @@
 #!/bin/bash
 # After render_all.sh: comp, soundtrack, encode, review copies, stills and technical QC.
-# Usage: ./finish.sh FRAMES_DIR WORK_DIR [version]
+# Usage: ./finish.sh FRAMES_DIR WORK_DIR [version] [music track A|B|C|D; none = synthesised score]
 set -e
-FR=${1:?frames dir}; WK=${2:?work dir}; V=${3:-v001}
+FR=${1:?frames dir}; WK=${2:?work dir}; V=${3:-v001}; TRK=${4:-}
 cd "$(dirname "$0")"
 mkdir -p "$WK/final" 09_DELIVERY 08_REVIEW/stills 03_ANIMATIC
 python3 06_COMP/post.py "$FR" "$WK/final"
-python3 07_EDIT_SOUND/audio.py "$WK/mix.wav" 07_EDIT_SOUND/Sound_Cue_Sheet.csv
+python3 07_EDIT_SOUND/audio.py "$WK/mix.wav" 07_EDIT_SOUND/Sound_Cue_Sheet.csv $TRK
+# loudness: one fixed gain to -14 LUFS plus a peak limiter. (Not ffmpeg's one-pass loudnorm: it rides the
+# level, which lifts the quiet room and pulls the music down.)
+loud() { ffmpeg -hide_banner -nostats -i "$1" -af ebur128 -f null - 2>&1 | grep "I:" | tail -1 | awk '{print $2}'; }
+GAIN=$(python3 -c "print(round(-14.0 - ($(loud "$WK/mix.wav")), 2))")
+AF="volume=${GAIN}dB,alimiter=limit=0.84:attack=2:release=60:level=disabled"
 M=09_DELIVERY/MT15_master_${V}.mp4
 ffmpeg -loglevel error -y -framerate 24 -i "$WK/final/%04d.png" -i "$WK/mix.wav" \
-  -af "loudnorm=I=-14:TP=-1.5:LRA=11" -ar 48000 \
+  -af "$AF" -ar 48000 \
   -c:v libx264 -preset slow -crf 17 -maxrate 20M -bufsize 40M -pix_fmt yuv420p \
   -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
   -c:a aac -b:a 256k -frames:v 384 -movflags +faststart "$M"
@@ -19,15 +24,15 @@ ffmpeg -loglevel error -y -i "$M" -c:v libx264 -preset slow -crf 22 -maxrate 8M 
   09_DELIVERY/MT15_mobile_${V}.mp4
 # review copy: shot ID and frame number burned in (SOP step 20)
 DT=""; i=0
-for row in "S01 0 30" "S02 30 50" "S03 50 62" "S04 62 90" "S05 90 126" "S06 126 150" "S07 150 164" \
-           "S08 164 236" "S09 236 272" "S10 272 302" "S11 302 342" "S12 342 384"; do
+for row in "S01 0 30" "S02 30 50" "S03 50 62" "S04 62 90" "S05 90 126" "S06 126 150" "S07 150 162" \
+           "S08 162 234" "S09 234 270" "S10 270 306" "S11 306 342" "S12 342 384"; do
   set -- $row
   DT="${DT}drawtext=text='$1':x=40:y=h-150:fontsize=54:fontcolor=white:box=1:boxcolor=black@0.55:boxborderw=12:enable='between(n,$2,$(($3-1)))',"
 done
 ffmpeg -loglevel error -y -i "$M" -vf "${DT}drawtext=text='%{frame_num}':start_number=0:x=w-tw-40:y=h-150:fontsize=44:fontcolor=white:box=1:boxcolor=black@0.55:boxborderw=12,scale=540:960" \
   -c:v libx264 -crf 22 -pix_fmt yuv420p -c:a aac -b:a 128k 08_REVIEW/MT15_review_burnin_${V}.mp4
 # one still per shot (middle frame) for review and as Higgsfield start frames
-for row in "S01 15" "S02 44" "S03 53" "S04 76" "S05 112" "S06 138" "S07 160" "S08 205" "S09 258" "S10 288" "S11 322" "S12 375"; do
+for row in "S01 15" "S02 44" "S03 53" "S04 76" "S05 112" "S06 138" "S07 158" "S08 203" "S09 256" "S10 290" "S11 324" "S12 375"; do
   set -- $row; cp "$WK/final/$(printf %04d $2).png" "08_REVIEW/stills/$1.png"
 done
 ffmpeg -loglevel error -y -pattern_type glob -i "08_REVIEW/stills/S*.png" -vf "scale=270:480,tile=6x2:padding=0" -frames:v 1 08_REVIEW/contact_sheet_${V}.jpg

@@ -25,7 +25,7 @@ CUTS = {
     "S04": ("S04_seedance_take01_720p.mp4", 50, 28, 1),   # bike clears the stall post and rides out
     "S05": ("S05_seedance_take01_720p.mp4", 24, 36, 1),   # beam arrives, drop bursts on local frame 12
     "S09": ("S09_seedance_take01_720p.mp4", 24, 36, 2),   # the city builds under the aerial, double speed
-    "S10": ("S10_seedance_take01_720p.mp4", 6, 30, 1),
+    "S10": ("S10_seedance_take01_720p.mp4", 6, 36, 1),
 }
 
 

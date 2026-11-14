@@ -1,21 +1,22 @@
 frame,seconds,track,cue
 0,0.000,AMBIENCE,"room tone, TV fan"
+0,0.000,MUSIC,music track D: held low and muffled in the room
 5,0.200,FOLEY,"UI tick, repeats every 0.5 s"
 42,1.750,FOLEY,idea: glint ting on the visor
 57,2.375,FOLEY,visor snaps shut
 62,2.583,AMBIENCE,hard cut to rain bed
-62,2.583,MUSIC,low D drone under the rain
+62,2.583,MUSIC,music opens up in the rain
 62,2.583,VEHICLE,engine pass-by (synth)
+90,3.750,MUSIC,music out: time stops on the drop
 90,3.750,VFX,"time freezes: rain and engine drop out, glass tone"
-102,4.250,VFX,burst: whoosh and a bright chord
+102,4.250,MUSIC,"the drop: full track from here, one beat every 12 frames"
+102,4.250,VFX,"burst: whoosh, low boom, the music drops"
 153,6.375,FOLEY,drop hits the puddle
-164,6.833,MUSIC,"pulse, arpeggio and pad enter at 120 BPM"
-173,7.208,FOLEY,"kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after"
-173,7.208,FOLEY,"rail posts land on the eighths, metal tick"
-190,7.918,FOLEY,rail lamps light: soft chime on the half beats
-272,11.333,MUSIC,"widest chord, arpeggio up an octave"
-272,11.333,VEHICLE,engine opens up
-302,12.583,AMBIENCE,hard cut back to room tone
-302,12.583,MUSIC,clean stop on the hard cut
-315,13.133,FOLEY,TV blip: 4%
-342,14.250,MUSIC,end sting: D major pad and sub
+168,7.000,FOLEY,"kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after"
+168,7.000,FOLEY,"rail posts land on the eighths, metal tick"
+185,7.710,FOLEY,rail lamps light: soft chime on the half beats
+270,11.250,VEHICLE,engine opens up
+306,12.750,AMBIENCE,hard cut back to room tone
+306,12.750,MUSIC,hard cut to the room: music stops dead
+319,13.300,FOLEY,TV blip: 4%
+342,14.250,MUSIC,"end card: the track's own final hit and tail, low boom"

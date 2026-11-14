@@ -106,3 +106,25 @@ Technical check repeated: 384 frames, 16.000 s, -14.1 LUFS, no decode errors (`t
 Still open: S08 stones read as white blocks; S01/S11 are stills (the man does not move); bike shots are 720p
 upscaled; Yamaha logo is a placeholder; game-title clearance and the Bangladesh rear fitment are unconfirmed;
 nobody has listened to the synthesised sound on a phone yet.
+
+---
+## v007 addendum (14 Nov 2026) — music and re-cut, 9.32 credits (approved)
+Owner note on v006: picture fine, raindrop as wanted, sound design not right; wanted the feel of the game's music.
+The game's own music cannot be used (third-party copyright). Instead: four original 1980s Miami synthwave
+tracks, generated from our own prompt, and the film re-cut to them.
+- **Picture is now cut on the beat.** The music's first beat is the raindrop burst (frame 102, 4.25 s) and a beat
+  falls every 12 frames after it. S06 (126), S07 (150), S08 (162), S09 (234), S10 (270), S11 (306) and the end
+  card (342) all start on a beat. Changed lengths: S07 12 (was 14), S10 36 (was 30), S11 36 (was 40).
+- **Music shape:** low and muffled in the room, opening in the rain, silent for the half second the drop hangs,
+  full from the burst, stops dead on the hard cut to the room, and the track's own final hit lands on the end card.
+- **Sound effects** stay synthesised and sit under the music: rain, engine (lower during the ride), visor click,
+  whoosh and a low boom on the burst, puddle plink, kerb stones on the eighth notes from 7.0 s, TV blip.
+  Pitched extras from the old score (burst chord, lamp chimes, end pad) are off so they cannot clash with the key.
+- **Loudness** is now one fixed gain to -14 LUFS with a peak limiter. The old one-pass normaliser rode the level,
+  which lifted the quiet room and pulled the loud part down.
+- Four phone copies, same picture: `MT15_mobile_v007_musicA/B/C.mp4` and `MT15_mobile_v007.mp4` (track D).
+  The master carries track D until one is chosen.
+Checked by measurement only: kicks sit within about 10 ms of the beat grid in A, B and D; C has a dotted rhythm
+that could not be checked the same way. **Nobody has listened to these mixes yet** — the choice of track and
+the balance of music against effects need the owner's ears.
+Technical check: 384 frames, 16.000 s, -14.3 LUFS, peak -1.4 dBFS, no decode errors (`technical_qc_v007.txt`).

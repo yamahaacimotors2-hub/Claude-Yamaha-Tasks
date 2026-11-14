@@ -1,12 +1,17 @@
-"""Sound design and music for the MT-15 16 s film, v1. Everything here is synthesised from scratch
-(no samples, no recordings), so there is nothing to clear.
+"""Sound design and music for the MT-15 16 s film.
 
-Usage:  python3 audio.py OUT.wav [CUE_SHEET.csv]
+Usage:  python3 audio.py OUT.wav [CUE_SHEET.csv] [A|B|C|D]
 
-The city is built in time with the music: at 8 m/s one kerb stone seats every 1/8 s, which is a
-sixteenth note at 120 BPM. Rail posts land on the eighths and the rail lamps light on the half beats.
+Without a letter: everything is synthesised here (no samples, no recordings).
+With a letter: the music is one of the four generated synthwave tracks in music/ (ElevenLabs Music v2.5 through
+Higgsfield, 120 BPM), re-cut to the picture; the sound effects stay synthesised.
+
+The picture is cut on the music's beat grid, which is anchored on the raindrop burst (frame 102, 4.25 s):
+a beat falls every 12 frames from there, and S06, S07, S08, S09, S10, S11 and the end card all start on one.
 """
 import csv
+import os
+import subprocess
 import sys
 
 import numpy as np
@@ -15,8 +20,10 @@ SR, FPS, DUR = 48000, 24, 16.0
 N = int(SR * DUR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(4)
-CUT = {"S01": 0, "S02": 30, "S03": 50, "S04": 62, "S05": 90, "S06": 126, "S07": 150, "S08": 164,
-       "S09": 236, "S10": 272, "S11": 302, "S12": 342, "END": 384}
+CUT = {"S01": 0, "S02": 30, "S03": 50, "S04": 62, "S05": 90, "S06": 126, "S07": 150, "S08": 162,
+       "S09": 234, "S10": 270, "S11": 306, "S12": 342, "END": 384}
+TRACK = sys.argv[3] if len(sys.argv) > 3 else None       # generated music variation, or None for the synth score
+HERE = os.path.dirname(os.path.abspath(__file__))
 T = {k: v / FPS for k, v in CUT.items()}
 cues = []
 
@@ -109,6 +116,8 @@ veh += engine(T["S07"], T["S08"], 126, 126, 0.10)
 veh += engine(T["S08"], T["S09"], 126, 132, 0.17)
 veh += engine(T["S09"], T["S10"], 132, 132, 0.08)                         # heard from the air
 veh += engine(T["S10"], T["S11"], 132, 150, 0.22)
+if TRACK:
+    veh *= np.where(t < T["S05"] + 0.5, 1.0, 0.55)                        # the music carries the ride
 cue(T["S04"], "engine pass-by (synth)", "VEHICLE")
 cue(T["S10"], "engine opens up", "VEHICLE")
 
@@ -118,10 +127,15 @@ place(fx, glass, T["S05"] + 0.02, 0.035)
 cue(T["S05"], "time freezes: rain and engine drop out, glass tone", "VFX")
 burst_t = T["S05"] + 12 / FPS
 whoosh = bandpass(rng.normal(0, 1, int(0.7 * SR)), 500, 7000) * np.exp(-np.arange(int(0.7 * SR)) / SR / 0.16)
-place(fx, whoosh, burst_t, 0.30)
-place(mus, tone(220, 1.2, 0.5, (1.0, 0.5, 0.3)) + tone(277.18, 1.2, 0.5, (1.0, 0.4)) + tone(329.63, 1.2, 0.5),
-      burst_t, 0.10)
-cue(burst_t, "burst: whoosh and a bright chord", "VFX")
+place(fx, whoosh, burst_t, 0.42 if TRACK else 0.30)
+tb = np.arange(int(0.6 * SR)) / SR
+boom = np.sin(2 * np.pi * (38 * tb + 9.0 * (1 - np.exp(-tb / 0.06)))) * np.exp(-tb / 0.16)   # pitch falls 190 -> 38 Hz
+if TRACK:
+    place(fx, boom, burst_t, 0.45)
+else:
+    place(mus, tone(220, 1.2, 0.5, (1.0, 0.5, 0.3)) + tone(277.18, 1.2, 0.5, (1.0, 0.4)) + tone(329.63, 1.2, 0.5),
+          burst_t, 0.10)
+cue(burst_t, "burst: whoosh, low boom, the music drops", "VFX")
 plink_t = T["S07"] + 3 / FPS
 tt = np.arange(int(0.35 * SR)) / SR
 plink = np.sin(2 * np.pi * (1500 * tt - 1100 * tt ** 2)) * np.exp(-tt / 0.07)
@@ -129,7 +143,7 @@ place(fx, plink, plink_t, 0.30)
 cue(plink_t, "drop hits the puddle", "FOLEY")
 
 # ---- the build, on the sixteenth-note grid
-BEAT0 = T["S08"] + 0.375                      # the first kerb stone lands here
+BEAT0 = T["S08"] + 0.25                       # first kerb stone: 7.0 s, an eighth note on the music grid
 stone = click(0.07, 250, 2600, 0.016) + 0.7 * np.pad(tone(95, 0.07, 0.03), (0, 0))[: int(0.07 * SR)]
 post = tone(1180, 0.16, 0.035, (1.0, 0.5, 0.25)) * 0.7 + click(0.16, 3000, 9000, 0.004)[: int(0.16 * SR)] * 0.4
 lamp = tone(1760, 0.5, 0.16, (1.0, 0.3)) + tone(2637, 0.5, 0.12)
@@ -142,64 +156,134 @@ while BEAT0 + k * 0.125 < T["S11"]:
         place(fx, stone * (0.9 + 0.2 * rng.random()), tm, (0.20 if hero else 0.16) * near)
     if k % (4 if hero else 2) == 0:
         place(fx, post, tm + 0.004, 0.07 * near)
-    if k % 4 == 2:
+    if k % 4 == 2 and not TRACK:                                        # pitched chime: only with the synth score
         place(fx, lamp, tm + 0.46, 0.035 * near)
     k += 1
 cue(BEAT0, "kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after", "FOLEY")
 cue(BEAT0, "rail posts land on the eighths, metal tick", "FOLEY")
 cue(BEAT0 + 0.71, "rail lamps light: soft chime on the half beats", "FOLEY")
 
-# ---- music: restrained synth, opens up with the city
-def pad(freqs, start, end, gain):
-    s = np.zeros(N)
-    for f in freqs:
-        for det in (-0.4, 0.0, 0.5):
-            s += np.sin(2 * np.pi * (f + det) * t + rng.random() * 6.28)
-            s += 0.3 * np.sin(2 * np.pi * (2 * f + det) * t)
-    return s / len(freqs) * env(start, end, 0.5, 0.5) * gain
+# ---- music
+musL, musR = np.zeros(N), np.zeros(N)
+DROP_T = T["S05"] + 12 / FPS                  # 4.25 s: the burst, and beat one of the music
+OUT_T = T["S11"]                              # 12.75 s: hard cut to the room, music stops dead
+# Per track: `drop` = music time of the beat laid on the burst; `body_end` = the beat where the track's own
+# ending starts (that ending becomes the end-card sting); `treat` = the track has no quiet intro of its own,
+# so the part before the drop is filtered and held down.
+ARR = {"A": dict(drop=5.53, body_end=13.53, treat=True),
+       "B": dict(drop=5.53, body_end=12.03, treat=True),
+       "C": dict(drop=8.03, body_end=16.03, treat=True),
+       "D": dict(drop=6.03, body_end=13.53, treat=False)}
 
 
-mus += pad((73.42, 110.0), T["S04"], T["S08"] + 0.3, 0.030)                           # D drone in the rain
-mus += pad((146.83, 220.0, 261.63, 329.63), T["S08"], T["S09"] + 0.3, 0.045)          # Dm9, the build
-mus += pad((174.61, 261.63, 329.63, 392.0), T["S09"], T["S10"] + 0.3, 0.055)          # Fmaj9, the aerial
-mus += pad((196.0, 293.66, 349.23, 440.0, 523.25), T["S10"], T["S11"], 0.070)         # G9sus, the city opens
-arp = (293.66, 349.23, 440.0, 523.25, 440.0, 349.23)
-k = 0
-while BEAT0 + k * 0.25 < T["S11"] - 0.05:
-    tm = BEAT0 + k * 0.25
-    lift = 1.0 if tm < T["S10"] else 2.0
-    place(mus, tone(arp[k % 6] * lift, 0.5, 0.14, (1.0, 0.35, 0.12)), tm, 0.030 + 0.012 * (tm > T["S09"]))
-    k += 1
-kick = np.sin(2 * np.pi * (48 * tt[: int(0.3 * SR)] + 30 * np.exp(-tt[: int(0.3 * SR)] / 0.03))) \
-    * np.exp(-tt[: int(0.3 * SR)] / 0.11)
-k = 0
-while BEAT0 + k * 0.5 < T["S11"] - 0.05:
-    place(mus, kick, BEAT0 + k * 0.5, 0.16)
-    k += 1
-mus *= 1 - env(T["S11"], T["S12"], 0.004, 0.004)                                      # hard cut: music out
-cue(T["S04"], "low D drone under the rain", "MUSIC")
-cue(T["S08"], "pulse, arpeggio and pad enter at 120 BPM", "MUSIC")
-cue(T["S10"], "widest chord, arpeggio up an octave", "MUSIC")
-cue(T["S11"], "clean stop on the hard cut", "MUSIC")
+def synth_score():
+    def pad(freqs, start, end, gain):
+        s = np.zeros(N)
+        for f in freqs:
+            for det in (-0.4, 0.0, 0.5):
+                s += np.sin(2 * np.pi * (f + det) * t + rng.random() * 6.28)
+                s += 0.3 * np.sin(2 * np.pi * (2 * f + det) * t)
+        return s / len(freqs) * env(start, end, 0.5, 0.5) * gain
+
+    mus = np.zeros(N)
+    mus += pad((73.42, 110.0), T["S04"], T["S08"] + 0.3, 0.030)                           # D drone in the rain
+    mus += pad((146.83, 220.0, 261.63, 329.63), T["S08"], T["S09"] + 0.3, 0.045)          # Dm9, the build
+    mus += pad((174.61, 261.63, 329.63, 392.0), T["S09"], T["S10"] + 0.3, 0.055)          # Fmaj9, the aerial
+    mus += pad((196.0, 293.66, 349.23, 440.0, 523.25), T["S10"], T["S11"], 0.070)         # G9sus, the city opens
+    arp = (293.66, 349.23, 440.0, 523.25, 440.0, 349.23)
+    k = 0
+    while BEAT0 + k * 0.25 < T["S11"] - 0.05:
+        tm = BEAT0 + k * 0.25
+        lift = 1.0 if tm < T["S10"] else 2.0
+        place(mus, tone(arp[k % 6] * lift, 0.5, 0.14, (1.0, 0.35, 0.12)), tm, 0.030 + 0.012 * (tm > T["S09"]))
+        k += 1
+    kick = np.sin(2 * np.pi * (48 * tt[: int(0.3 * SR)] + 30 * np.exp(-tt[: int(0.3 * SR)] / 0.03))) \
+        * np.exp(-tt[: int(0.3 * SR)] / 0.11)
+    k = 0
+    while BEAT0 + k * 0.5 < T["S11"] - 0.05:
+        place(mus, kick, BEAT0 + k * 0.5, 0.16)
+        k += 1
+    mus *= 1 - env(T["S11"], T["S12"], 0.004, 0.004)                                      # hard cut: music out
+    mus += pad((146.83, 220.0, 293.66, 369.99, 440.0), T["S12"], T["END"] + 1, 0.13)      # D major: resolved
+    place(mus, tone(55, 1.5, 0.5) * 0.9, T["S12"], 0.30)
+    place(fx, tone(1174.66, 1.2, 0.4, (1.0, 0.3)), T["S12"] + 0.25, 0.05)
+    cue(T["S04"], "low D drone under the rain", "MUSIC")
+    cue(T["S08"], "pulse, arpeggio and pad enter at 120 BPM", "MUSIC")
+    cue(T["S10"], "widest chord, arpeggio up an octave", "MUSIC")
+    cue(T["S11"], "clean stop on the hard cut", "MUSIC")
+    cue(T["S12"], "end sting: D major pad and sub", "MUSIC")
+    return mus
+
+
+def generated_score(letter):
+    a = ARR[letter]
+    path = os.path.join(HERE, "music", f"MT15_music_{letter}.mp3")
+    raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", path, "-f", "f32le", "-ac", "2", "-ar", str(SR), "-"],
+                         capture_output=True, check=True).stdout
+    src = np.frombuffer(raw, "<f4").reshape(-1, 2).astype(np.float64)
+    out = np.zeros((N, 2))
+    PRE = 0.020                               # every join sits 20 ms ahead of the beat, so no drum hit is cut
+
+    def lay(film_t, music_t, length, fade_in=0.012, fade_out=0.012):
+        """Copy `length` seconds of the track, starting at music_t, to film_t. Joins are short crossfades."""
+        i0, m0, n = int(round(film_t * SR)), int(round(music_t * SR)), int(round(length * SR))
+        if i0 < 0:
+            m0, n, i0 = m0 - i0, n + i0, 0
+        n = min(n, N - i0, len(src) - m0)
+        seg = src[m0:m0 + n].copy()
+        fi, fo = int(fade_in * SR), int(fade_out * SR)
+        seg[:fi] *= np.linspace(0, 1, fi)[:, None]
+        seg[n - fo:] *= np.linspace(1, 0, fo)[:, None]
+        out[i0:i0 + n] += seg
+
+    body = a["body_end"] - a["drop"]                        # seconds of full music the track gives us
+    rest = (OUT_T - DROP_T) - body                          # what is still missing up to the hard cut
+    lay(0.0, a["drop"] - DROP_T, DROP_T - PRE + 0.012)                                  # everything before the drop
+    lay(DROP_T - PRE - 0.012, a["drop"] - PRE - 0.012, body + 0.012)                    # the drop and the ride
+    if rest > 0.01:                                         # repeat from one bar back, so the bar count stays right
+        lay(DROP_T + body - PRE - 0.012, a["body_end"] - 2.0 - PRE - 0.012, rest + PRE + 0.012, fade_out=0.004)
+    lay(T["S12"] - PRE, a["body_end"] - PRE, T["END"] - T["S12"] + PRE, fade_in=0.004)  # the track's own ending
+    ride = (t >= DROP_T) & (t < OUT_T)
+    out *= 0.15 / np.sqrt((out[ride] ** 2).mean())          # same ride level for every track
+    # before the drop: low and muffled in the room, opening in the rain, gone while the drop hangs
+    u_rain = np.clip((t - T["S04"]) / (T["S05"] - T["S04"]), 0, 1)
+    hang = np.clip((t - T["S05"]) / 0.10, 0, 1) * (t < DROP_T - PRE)
+    pre = t < DROP_T - PRE
+    if a["treat"]:
+        low = np.stack([bandpass(out[:, c] * pre, 20, 420) for c in (0, 1)], 1)
+        open_ = (0.65 * u_rain ** 1.5)[:, None]             # how much of the full-range track is let through
+        gain = 10 ** ((-17 + 9 * u_rain) / 20)
+        shaped = (low * (1 - open_) * 2.0 + out * open_) * gain[:, None]
+    else:
+        shaped = out * (10 ** (6 / 20))                     # the track's own quiet build, lifted a little
+    shaped = shaped * (1 - 0.97 * hang)[:, None]
+    out = np.where(pre[:, None], shaped, out)
+    out *= np.clip((DROP_T - PRE - t) / 0.004, 0, 1)[:, None] * pre[:, None] + (~pre)[:, None]
+    place(fx, boom, T["S12"], 0.40)
+    cue(0.0, f"music track {letter}: held low and muffled in the room", "MUSIC")
+    cue(T["S04"], "music opens up in the rain", "MUSIC")
+    cue(T["S05"], "music out: time stops on the drop", "MUSIC")
+    cue(DROP_T, "the drop: full track from here, one beat every 12 frames", "MUSIC")
+    cue(OUT_T, "hard cut to the room: music stops dead", "MUSIC")
+    cue(T["S12"], "end card: the track's own final hit and tail, low boom", "MUSIC")
+    return out[:, 0], out[:, 1]
+
 
 # ---- 4% and the end card
 place(fx, tone(880, 0.08, 0.03), T["S11"] + 0.55, 0.16)
 place(fx, tone(1174.66, 0.14, 0.05), T["S11"] + 0.66, 0.16)
 cue(T["S11"] + 0.55, "TV blip: 4%", "FOLEY")
-sting = pad((146.83, 220.0, 293.66, 369.99, 440.0), T["S12"], T["END"] + 1, 0.13)   # D major: resolved
-sub = tone(55, 1.5, 0.5) * 0.9
-mus += sting
-place(mus, sub, T["S12"], 0.30)
-place(fx, tone(1174.66, 1.2, 0.4, (1.0, 0.3)), T["S12"] + 0.25, 0.05)
-cue(T["S12"], "end sting: D major pad and sub", "MUSIC")
 
 # ---- mix
-wet = reverb(fx * 1.0 + mus * 0.9, 1.6, 0.22)
-dry = amb + veh
-mix = wet + dry
-mix *= np.clip((T["END"] - t) / 0.12, 0, 1)                    # no click on the last frame
+if TRACK:
+    musL, musR = generated_score(TRACK)
+    wet = reverb(fx, 1.6, 0.22)
+else:
+    wet = reverb(fx + synth_score() * 0.9, 1.6, 0.22)
+centre = wet + amb + veh
+fade = np.clip((T["END"] - t) / 0.12, 0, 1)                    # no click on the last frame
 width = bandpass(rng.normal(0, 1, N), 2000, 9000) * 0.004 * rain_level
-left, right = mix + width, mix - width
+left, right = (centre + musL + width) * fade, (centre + musR - width) * fade
 peak = max(np.abs(left).max(), np.abs(right).max())
 stereo = np.stack([left, right], 1) / peak * 0.80
 
@@ -209,9 +293,17 @@ with wave.open(sys.argv[1], "wb") as w:
     w.setsampwidth(2)
     w.setframerate(SR)
     w.writeframes((stereo * 32767).astype("<i2").tobytes())
-if len(sys.argv) > 2:
+if len(sys.argv) > 2 and sys.argv[2] != "-":
     with open(sys.argv[2], "w", newline="") as f:
         wr = csv.writer(f)
         wr.writerow(["frame", "seconds", "track", "cue"])
         wr.writerows(sorted(cues))
+if TRACK:                                                       # levels by section, for the mix notes
+    def db(x, a, b):
+        m = (t >= a) & (t < b)
+        return 20 * np.log10(np.sqrt((x[m] ** 2).mean()) + 1e-9)
+    for name, a, b in (("room", 0, T["S04"]), ("rain", T["S04"], T["S05"]), ("hang", T["S05"], DROP_T),
+                       ("ride", DROP_T, OUT_T), ("room2", OUT_T, T["S12"]), ("card", T["S12"], T["END"])):
+        print(f"  {name:6s} music {db(musL, a, b):6.1f}  ambience {db(amb, a, b):6.1f}  engine {db(veh, a, b):6.1f}"
+              f"  effects {db(wet, a, b):6.1f} dB")
 print("audio written", sys.argv[1], f"{DUR}s", f"peak {peak:.3f}")
