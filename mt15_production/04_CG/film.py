@@ -773,8 +773,11 @@ def main():
     ap.add_argument("--samples", type=int, default=0)
     ap.add_argument("--tv", default="named", choices=("named", "clean"))
     ap.add_argument("--blend", default="")
+    ap.add_argument("--n", type=int, default=0, help="override the shot length in frames (for handles)")
     a = ap.parse_args(argv)
 
+    if a.n:
+        SHOTS[a.shot]["n"] = a.n
     sh = configure(a.shot)
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"
