@@ -15,7 +15,7 @@ SR, FPS, DUR = 48000, 24, 16.0
 N = int(SR * DUR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(4)
-CUT = {"S01": 0, "S02": 30, "S03": 50, "S04": 62, "S05": 96, "S06": 126, "S07": 150, "S08": 164,
+CUT = {"S01": 0, "S02": 30, "S03": 50, "S04": 62, "S05": 90, "S06": 126, "S07": 150, "S08": 164,
        "S09": 236, "S10": 272, "S11": 302, "S12": 342, "END": 384}
 T = {k: v / FPS for k, v in CUT.items()}
 cues = []
@@ -89,7 +89,7 @@ place(fx, reverb_small := tone(2637, 0.9, 0.22, (1.0, 0.4, 0.15)), T["S02"] + 12
 cue(T["S02"] + 12 / FPS, "idea: glint ting on the visor", "FOLEY")
 snap = click(0.05, 1500, 9000, 0.006) * 0.9 + np.pad(tone(140, 0.05, 0.02), (0, 0))[: int(0.05 * SR)] * 0.8
 place(fx, snap, T["S03"] + 7 / FPS, 0.34)
-cue(T["S03"] + 7 / FPS, "chin-strap buckle click", "FOLEY")
+cue(T["S03"] + 7 / FPS, "visor snaps shut", "FOLEY")
 
 # ---- vehicle: a synthesised single-cylinder note, never a recording
 def engine(start, end, f0, f1, gain, pan_bias=0.0):
@@ -107,8 +107,8 @@ veh += engine(T["S05"], T["S06"], 118, 118, 0.20) * freeze
 veh += engine(T["S06"], T["S07"], 118, 126, 0.24)
 veh += engine(T["S07"], T["S08"], 126, 126, 0.10)
 veh += engine(T["S08"], T["S09"], 126, 132, 0.17)
-veh += engine(T["S09"], T["S10"], 132, 138, 0.19)                         # v005: chase picture from here
-veh += engine(T["S10"], T["S11"], 138, 150, 0.22)
+veh += engine(T["S09"], T["S10"], 132, 132, 0.08)                         # heard from the air
+veh += engine(T["S10"], T["S11"], 132, 150, 0.22)
 cue(T["S04"], "engine pass-by (synth)", "VEHICLE")
 cue(T["S10"], "engine opens up", "VEHICLE")
 
@@ -136,7 +136,7 @@ lamp = tone(1760, 0.5, 0.16, (1.0, 0.3)) + tone(2637, 0.5, 0.12)
 k = 0
 while BEAT0 + k * 0.125 < T["S11"]:
     tm = BEAT0 + k * 0.125
-    near = 1.0 if tm < T["S09"] else 0.6                                # hero shot close, then the chase
+    near = 1.0 if tm < T["S09"] else (0.45 if tm < T["S10"] else 0.7)   # close, from the air, chase
     hero = tm < T["S09"]            # in the restyled hero shot a stone lands every eighth note, not every sixteenth
     if not hero or k % 2 == 0:
         place(fx, stone * (0.9 + 0.2 * rng.random()), tm, (0.20 if hero else 0.16) * near)

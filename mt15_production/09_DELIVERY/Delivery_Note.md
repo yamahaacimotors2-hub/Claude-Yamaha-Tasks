@@ -13,3 +13,9 @@ Blocking before any public use: written clearance for the game title, the offici
 product-accurate bike shots, client sign-off.
 
 Rebuild from source: `04_CG/render_all.sh FRAMES` then `./finish.sh FRAMES WORK v002`.
+
+## Latest: v006 (14 Nov 2026)
+`MT15_master_v006.mp4` / `MT15_mobile_v006.mp4`, same specification, -14.1 LUFS. Twelve shots; S03, S05 and S09 are
+new Seedance takes. Changes per version: `../08_REVIEW/QC_Report.md`. Status is still **review, not for publishing**.
+Rebuild: `python3 06_COMP/stills.py STILLS FRAMES S01 S02 S07 S11`, `python3 06_COMP/takes.py FRAMES`,
+then `./finish.sh FRAMES WORK v006` (S06 and S08 frames come from their takes as noted in `05_GENERATIONS/Generation_Log.md`).

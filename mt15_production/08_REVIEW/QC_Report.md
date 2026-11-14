@@ -87,3 +87,22 @@ Technical check repeated: 384 frames, 16.000 s, -14.2 LUFS, no decode errors (`t
 - Result: every shot in the film is photoreal or built from a photoreal still. Eleven shots, 384 frames.
 Technical check repeated: 384 frames, 16.000 s, -13.9 LUFS, no decode errors (`technical_qc_v005.txt`).
 Lost with the aerial: the single frame that showed "built behind, building at the bike, grey ahead" all at once.
+
+---
+## v006 addendum (14 Nov 2026) — three Seedance takes, 84.25 credits (approved)
+- **S05 (raindrop) is now a real take and the best shot in the film.** The headlight star arrives behind the drop,
+  the drop opens on its right side and throws an amber sheet that turns magenta at the edges, with ligaments and
+  droplets, in slow motion. It matches storyboard panel 06. The shot is 36 frames now (was 30); the 6 frames
+  come from the tea-stall shot (S04, now 28). The burst starts on local frame 12, on the whoosh.
+- **S03 (visor)** is a real take: the visor snaps down on the click, the face stays visible through the clear visor.
+  Note: the helmet shell changes slightly as the visor closes (top vent, surface). It passes at speed; it shows
+  if you step through frames.
+- **S09 (aerial) is back**, generated from a new photoreal keyframe (K09). One frame shows the finished street
+  behind, the city appearing around the bike and plain white blocks ahead. Played at double speed (frame pairs
+  averaged) so the build reads in 1.5 s. The bike is small; product detail is not checkable at this size.
+- S10 is back to 30 frames. Sound: aerial engine and stone levels restored to the v004 mix; S03 click is the visor.
+- Continuity note: the aerial ends with white blocks ahead, the chase (S10) opens on a fully built street.
+Technical check repeated: 384 frames, 16.000 s, -14.1 LUFS, no decode errors (`technical_qc_v006.txt`).
+Still open: S08 stones read as white blocks; S01/S11 are stills (the man does not move); bike shots are 720p
+upscaled; Yamaha logo is a placeholder; game-title clearance and the Bangladesh rear fitment are unconfirmed;
+nobody has listened to the synthesised sound on a phone yet.

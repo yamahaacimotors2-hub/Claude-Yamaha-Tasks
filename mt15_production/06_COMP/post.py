@@ -20,11 +20,10 @@ PRODUCT = os.path.join(ROOT, "01_REFERENCES", "MT15_V2_Cyan_Storm.png")
 W, H = 1080, 1920
 
 # shot, frames, look
-EDIT = [("S01", 30, "room"), ("S02", 20, "room"), ("S03", 12, "room"), ("S04", 34, "rain"),
-        ("S05", 30, "macro"), ("S06", 24, "rain"), ("S07", 14, "macro"), ("S08", 72, "dusk"),
-        ("S10", 66, "dusk"), ("S11", 40, "room"), ("S12", 42, "card")]
-# v005: the aerial (S09) is out of the cut and the chase (S10) runs 66 frames in its place.
-# To put the aerial back: ("S09", 36, "dusk"), ("S10", 30, "dusk").
+EDIT = [("S01", 30, "room"), ("S02", 20, "room"), ("S03", 12, "room"), ("S04", 28, "rain"),
+        ("S05", 36, "macro"), ("S06", 24, "rain"), ("S07", 14, "macro"), ("S08", 72, "dusk"),
+        ("S09", 36, "dusk"), ("S10", 30, "dusk"), ("S11", 40, "room"), ("S12", 42, "card")]
+# v006: the raindrop (S05) runs 36 frames, taken from the stall shot (S04, now 28); the aerial (S09) is back.
 assert sum(n for _, n, _ in EDIT) == 384
 
 LOOKS = {   # gain per channel, contrast, saturation
@@ -178,7 +177,7 @@ def main():
             a = load(os.path.join(frames_dir, shot, f"f{f:04d}.png"))
             a = grade(a, "plate" if plate else look)
             amount = 0.0 if plate else {"S04": 1.0, "S06": 1.0, "S07": 0.55}.get(shot, 0.0)
-            if shot == "S05":                                      # time is frozen until the burst
+            if shot == "S05" and not plate:                        # CG drop only: time is frozen until the burst
                 amount = float(np.clip((f - 20) / 8, 0, 1)) * 0.8
             if amount:
                 size = a.shape[:2]                  # CG shots are 720x1280, still-based shots 1080x1920

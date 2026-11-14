@@ -2,12 +2,12 @@ frame,seconds,track,cue
 0,0.000,AMBIENCE,"room tone, TV fan"
 5,0.200,FOLEY,"UI tick, repeats every 0.5 s"
 42,1.750,FOLEY,idea: glint ting on the visor
-57,2.375,FOLEY,chin-strap buckle click
+57,2.375,FOLEY,visor snaps shut
 62,2.583,AMBIENCE,hard cut to rain bed
 62,2.583,MUSIC,low D drone under the rain
 62,2.583,VEHICLE,engine pass-by (synth)
-96,4.000,VFX,"time freezes: rain and engine drop out, glass tone"
-108,4.500,VFX,burst: whoosh and a bright chord
+90,3.750,VFX,"time freezes: rain and engine drop out, glass tone"
+102,4.250,VFX,burst: whoosh and a bright chord
 153,6.375,FOLEY,drop hits the puddle
 164,6.833,MUSIC,"pulse, arpeggio and pad enter at 120 BPM"
 173,7.208,FOLEY,"kerb stones seat: one every 1/4 s in the hero shot (eighths at 120 BPM), sixteenths after"

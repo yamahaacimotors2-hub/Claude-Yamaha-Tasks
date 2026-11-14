@@ -17,7 +17,13 @@ All runs on the same Higgsfield account. Credits are what the connector quoted b
 | S08 restyle take01 | S08 | Seedance 2.5, video_edit of the CG clip, 720p, audio off | `56f4fa5c-2e71-4e8e-b21b-175707c4b630` | 30 | `takes/S08_restyle_take01_720p.mp4` | Pass. Photoreal sky, wet road, wheel and lit rail lamps; stones still read as plain white blocks. A stone lands about every 7 frames (CG: every 3), so the clip is sped up 7/6 to sit on the eighth-note grid; in film v004 |
 | S09 restyle take01 | S09 | Seedance 2.5, video_edit of the 56-frame CG clip, 720p, audio off | `324e839e-3a90-44b3-ba58-b869a0893c6c` | 30 | `takes/S09_restyle_take01_720p.mp4` | **Fail as a restyle.** It came back almost unchanged: still low-poly boxes; only the palm shapes were removed and small lamps added. Used in v004 because it is slightly cleaner than the CG |
 
-Total from this session: **145.00 credits** (144 approved in advance; 0.75 on K04/K10 keyframes was run without asking; 0.25 on the K06 keyframe was announced beforehand).
+| K09 v001 | S09 | GPT Image 2.6, 9:16, default quality, storyboard panel 12 as reference | `e4156e92-dfd7-447a-8c3b-1522c034943d` | 0.25 | `keyframes/K09_S09_aerial_keyframe_v001.png` | Pass: finished street below, white unbuilt blocks ahead, beam on the boundary |
+| S05 take01 | S05 | Seedance 2.5, omni_reference (K05 as start frame, storyboard panel 06 as reference), 4 s, 720p, audio off | `98d70c90-6328-4a66-8c7c-f60dd6ab9819` | 28 | `takes/S05_seedance_take01_720p.mp4` | **Pass.** Beam arrives, the drop opens on its right side into an amber-to-magenta liquid sheet with ligaments and droplets, slow motion. Burst starts on take frame 36; frames 24-59 in film v006 |
+| S03 take01 | S03 | Seedance 2.5, omni_reference (K03 as start frame), 4 s, 720p, audio off | `c97c5f86-f47a-4f29-b692-9d30f8d680b5` | 28 | `takes/S03_seedance_take01_720p.mp4` | Pass with a note: buckle, then the visor snaps down (take frames 46-50). The helmet shell changes a little when the visor closes (top vent shape, rougher surface). Frames 42-53 in film v006 |
+| S09 take01 | S09 | Seedance 2.5, omni_reference (K09 as start frame), 4 s, 720p, audio off | `8fed7897-9a82-4d57-adc5-3d23754ecddb` | 28 | `takes/S09_seedance_take01_720p.mp4` | **Pass.** Photoreal aerial; palms, lamps, neon and a stall appear as the bike rides in, white blocks stay ahead. Nothing disappears. Frames 24-95 at double speed in film v006 |
+
+Total from this session: **229.25 credits** (228.25 approved in advance; 0.75 on K04/K10 keyframes was run without asking; 0.25 on the K06 keyframe was announced beforehand).
+Rule since then: no credit is spent without the owner's approval of a live quote.
 
 ## Run in ChatGPT (stills now in `stills_chatgpt/`, job IDs in `stills_chatgpt/SHOT_LOG_chatgpt.md`)
 A1-A5, K01, K02 v002, K03, K05, K07, K11, K12: generated at 4K and QC-passed there (about 81 credits).
@@ -29,6 +35,7 @@ K06 v005/v006 and K04 v001/v002 were also made there; K04 failed its rotor check
 | Official product photo | `c4032c14-e677-4e08-9728-13e92b4023c0` |
 | Rear view (BikeWale, India-market bike) | `2d1fc6b7-ff6d-453e-9f29-a168551cf79c` |
 | Rear-right view (BikeWale) | `f2f79806-3416-4424-bdbe-d1af0bd970f6` |
+| Storyboard v3 panel 03 / 06 / 12 | `cc1da959-e2a1-4c8f-b6fc-671929c9f2f0` / `1b090c9b-927f-42fa-b153-0bad6df6096a` / `3b917eec-4cb9-4af6-a031-49707586a9e0` |
 | Layout S04 / S06 / S10 | `8f36a718-eff2-451e-a83c-e1bec846d264` / `8c33be0d-01b8-457e-bf6b-f69bb559edac` / `49e15418-f9fe-4120-b0ba-4047f0d6c709` |
 
 The BikeWale and MaxAbout photos are third-party copyright. They are used only as internal reference for
